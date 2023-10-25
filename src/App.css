@@ -1,38 +1,72 @@
-.App {
-  text-align: center;
+.btn-red {
+  background-color: rgb(155, 19, 19);
+  color: gold;
+  font-weight: 700;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.btn-red:hover {
+  background-color: rgb(108, 29, 29);
+  color: gold;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.pageNotFound {
+  background-image: url(../public/img/bg-page.jpg);
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.SliderMovie .item {
+  max-height: 600px;
 }
 
-.App-link {
-  color: #61dafb;
+.SliderMovie .item .container {
+  position: relative;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.SliderMovie img {
+  height: 600;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+}
+
+.SliderMovie .bg {
+  background-size: cover;
+  background-position-y: -100px;
+  position: relative;
+  height: 600px;
+  width: 100vw;
+  z-index: 0;
+}
+
+.SliderMovie .bg::after {
+  content: '';
+  display: block;
+  background-color: black;
+  opacity: 0.8;
+  height: 600px;
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.MovieList .movie_item img {
+  width: 220px;
+  height: 300px;
+}
+
+:where(.css-dev-only-do-not-override-3mqfnx).ant-tabs-left >.ant-tabs-content-holder >.ant-tabs-content>.ant-tabs-tabpane, :where(.css-dev-only-do-not-override-3mqfnx).ant-tabs-left >div>.ant-tabs-content-holder >.ant-tabs-content>.ant-tabs-tabpane{
+  padding-left: 0;
+}
+.Header{
+  position:fixed;
+  top:0;
+  left:0;
+  width: 100vw;
+  z-index:10;
 }
