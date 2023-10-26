@@ -95,9 +95,9 @@ export const getMovieDetail = (maPhim) => {
     });
 };
 // TODO==================QUAN LY RAP==========================
-export const getTheaterGroup = (maHeThongRap) => {
+export const getTheaterGroup = () => {
     return axios({
-        url: `${BASE_URL}/QuanLyRap/LayThongTinHeThongRap?maHeThongRap=${maHeThongRap}`,
+        url: `${BASE_URL}/QuanLyRap/LayThongTinHeThongRap`,
         method: "GET",
         headers: configHeaders(),
     });

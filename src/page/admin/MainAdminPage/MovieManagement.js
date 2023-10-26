@@ -78,7 +78,6 @@ export default function MovieManagement() {
   // Thêm modal
   const showAddModal = () => { setIsAddModalOpen(true); };
   const showFixModal = async (maPhim) => {
-
     try {
       await fetchDataMovieInfo(maPhim);
       setIsFixModalOpen(true);
@@ -137,11 +136,15 @@ export default function MovieManagement() {
     formFix.append("dangChieu", values.dangChieu);
     formFix.append("hot", values.hot);
     formFix.append("maNhom", values.maNhom);
+    formFix.append("hinhAnh", selectedFile, selectedFile.name);
     if (selectedFile) {
       formFix.append("hinhAnh", selectedFile, selectedFile.name);
     }
+    let hi = formFix;
+    console.log("hi: ", hi);
     try {
-      await getDataMovieUpdated(formFix);
+      let response = await getDataMovieUpdated(formFix);
+      console.log("response: ", response);
       message.success("Cập nhật thông tin phim thành công");
     } catch (error) {
       message.error('Đã có lỗi xảy ra!!!');
