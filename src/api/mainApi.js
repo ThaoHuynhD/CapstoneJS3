@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BASE_URL, configHeaders, configHeaders2 } from "./config";
-const maNhom = 'GP07';
+const maNhom = 'GP01';
 // ${maNhom}
 // TODO==================QUAN LY DAT VE==========================
 export const getTicketBooked = (ticketInfo) => {
@@ -62,6 +62,13 @@ export const getMovieBanner = () => {
 export const getMovieList = () => {
     return axios({
         url: `${BASE_URL}/QuanLyPhim/LayDanhSachPhim?maNhom=${maNhom}`,
+        method: "GET",
+        headers: configHeaders(),
+    });
+};
+export const getMovieListSearchByName = (tenPhim) => {
+    return axios({
+        url: `${BASE_URL}/QuanLyPhim/LayDanhSachPhim?maNhom=${maNhom}&tenPhim=${tenPhim}`,
         method: "GET",
         headers: configHeaders(),
     });

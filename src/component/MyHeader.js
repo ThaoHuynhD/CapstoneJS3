@@ -3,9 +3,11 @@ import { Menu } from 'antd';
 import { userDetailLocalStorage, userLocalStorage } from '../api/localServices';
 import { useNavigate } from 'react-router-dom';
 
-export default function Header() {
+export default function MyHeader() {
     let navigate = useNavigate();
     let info = userLocalStorage.get();
+    let isAdmin;
+    if (info !== null && info !== undefined) { isAdmin = info.maLoaiNguoiDung === 'QuanTri'; }
     const [current, setCurrent] = useState('/');
 
     const menuLeftArr = [
@@ -57,9 +59,15 @@ export default function Header() {
         setCurrent(key);
         if (key === 'sign-out') {
             handleSignOut();
-        } else if (key === 'personal' || key === 'sign-in' || key === 'sign-up') {
+        }
+        else if (key === 'sign-in' || key === 'sign-up') {
             navigate(`/${key}`);
-        } else if (key) {
+        }
+        else if (key === 'personal') {
+            if (isAdmin) return;
+            else navigate(`/${key}`);
+        }
+        else {
             navigate('/');
             scrollIntoView(key);
         }
@@ -73,12 +81,12 @@ export default function Header() {
     };
 
     return (
-        <div className='Header'>
-            <div class="row d-between">
-                <div class="col-9">
-                    <Menu className='p-2' onClick={({ key }) => handleMenuItemClick(key)} selectedKeys={[current]} mode="horizontal" items={menuLeftArr} />
+        <div className='w-100'>
+            <div className="row bg-white">
+                <div className="col-9">
+                    {(isAdmin) ? null : <Menu className='p-2' onClick={({ key }) => handleMenuItemClick(key)} selectedKeys={[current]} mode="horizontal" items={menuLeftArr} />}
                 </div>
-                <div class="col-3">
+                <div className="col-3">
                     <Menu className='p-2' onClick={({ key }) => handleMenuItemClick(key)} mode="horizontal" items={menuRightArr} />
                 </div>
             </div>
