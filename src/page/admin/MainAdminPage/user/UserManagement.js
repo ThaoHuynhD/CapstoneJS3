@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getDataUser, getDataUserAddNew, getDataUserDelete, getDataUserInfoUpdated, getDataUserList, getDataUserSearch } from '../../../api/adminApi';
+import { getDataUser, getDataUserAddNew, getDataUserDelete, getDataUserInfoUpdated, getDataUserList, getDataUserSearch } from '../../../../api/adminApi';
 import { Form, Input, Select, Tag, message } from 'antd';
 import { Button, Modal } from 'antd';
 import Search from 'antd/es/input/Search';

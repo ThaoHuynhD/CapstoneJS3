@@ -1,8 +1,6 @@
 import axios from "axios";
 import { BASE_URL, configHeaders, configHeaders2 } from "./config";
 const maNhom = 'GP01';
-// ${maNhom}
-// TODO==================QUAN LY DAT VE==========================
 export const getTicketBooked = (ticketInfo) => {
     return axios({
         url: `${BASE_URL}/QuanLyDatVe/DatVe`,
@@ -19,7 +17,6 @@ export const getMovieShowTime = (maLichChieu) => {
     })
 }
 
-// TODO==================QUAN LY NGUOI DUNG==========================
 export const getUserSignIn = (userInput) => {
     return axios({
         url: `${BASE_URL}/QuanLyNguoiDung/DangNhap`,
@@ -51,7 +48,6 @@ export const getUserInfoUpdated = (userInput) => {
         headers: configHeaders2(),
     });
 }
-// TODO==================QUAN LY PHIM==========================
 export const getMovieBanner = () => {
     return axios({
         url: `${BASE_URL}/QuanLyPhim/LayDanhSachBanner?maNhom=${maNhom}`,
@@ -94,7 +90,6 @@ export const getMovieDetail = (maPhim) => {
         headers: configHeaders(),
     });
 };
-// TODO==================QUAN LY RAP==========================
 export const getTheaterGroup = () => {
     return axios({
         url: `${BASE_URL}/QuanLyRap/LayThongTinHeThongRap`,

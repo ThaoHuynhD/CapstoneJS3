@@ -1,15 +1,15 @@
 import { Button, Form, Input, Select } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { message } from 'antd';
-import { getMovieList, getTheaterByTheaterGroup, getTheaterGroup } from '../../../api/mainApi';
-import MovieInfo from '../../guest/MovieDetailPage/MovieInfo';
+import { getMovieList, getTheaterByTheaterGroup, getTheaterGroup } from '../../../../api/mainApi';
+import MovieInfo from '../../../guest/MovieDetailPage/MovieInfo';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { DatePicker } from 'antd';
 import { TimePicker } from 'antd';
 import moment from 'moment';
-import { getShowTimeCreate } from '../../../api/adminApi';
-import { userLocalStorage } from '../../../api/localServices';
+import { getShowTimeCreate } from '../../../../api/adminApi';
+import { userLocalStorage } from '../../../../api/localServices';
 export default function ShowTimeManagement() {
   const [movieList, setMovieList] = useState([]);
   const [movieSelected, setMovieSelected] = useState(['13085']);
@@ -19,22 +19,8 @@ export default function ShowTimeManagement() {
   const [theaterSelected, setTheaterSelected] = useState(null);
   const [form] = Form.useForm();
   const formItemLayout = {
-    labelCol: {
-      xs: {
-        span: 24,
-      },
-      sm: {
-        span: 8,
-      },
-    },
-    wrapperCol: {
-      xs: {
-        span: 24,
-      },
-      sm: {
-        span: 16,
-      },
-    },
+    labelCol: { xs: { span: 24, }, sm: { span: 8, }, },
+    wrapperCol: { xs: { span: 24, }, sm: { span: 16, }, },
   };
   dayjs.extend(customParseFormat);
   let info = userLocalStorage.get();
@@ -119,7 +105,7 @@ export default function ShowTimeManagement() {
       giaVe: values.giaVe,
     }
     try {
-      const response = await getShowTimeCreate(showTimeUpdate);
+      await getShowTimeCreate(showTimeUpdate);
       message.success("Tạo Lịch Chiếu thành công");
       setTimeout(() => {
         window.location.reload();
@@ -132,10 +118,11 @@ export default function ShowTimeManagement() {
   };
 
   const handleAddShowTime = (values) => {
-    console.log("values: ", values);
     fetchData(values);
-
   }
+
+
+
   return (
     <div className="container pt-5 mx-auto">
       <Select

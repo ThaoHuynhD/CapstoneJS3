@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { DesktopOutlined, FileOutlined, PieChartOutlined, TeamOutlined, UserOutlined, } from '@ant-design/icons';
+import { DesktopOutlined, ScheduleOutlined, PieChartOutlined, TeamOutlined, IdcardOutlined, CarryOutOutlined } from '@ant-design/icons';
 import { Breadcrumb, Layout, Menu, theme, } from 'antd';
 import MyHeader from '../../../component/MyHeader';
-import UserManagement from './UserManagement';
-import MovieManagement from './MovieManagement';
-import ShowTimeManagement from './ShowTimeManagement';
+import UserManagement from './user/UserManagement';
 import BookingManagement from './BookingManagement';
 import ReportManagement from './ReportManagement';
 import PersonalPage from '../../PersonalPage/PersonalPage';
+import AddMovie from './movie/AddMovie';
+import MovieList from './movie/MovieList';
+import ShowTimeAddNew from './showtime/ShowTimeAddNew';
+import ShowTimeList1 from './showtime/ShowTimeList1';
 
 const { Content, Sider, Header, } = Layout;
 function getItem(label, key, icon, children) {
@@ -15,22 +17,33 @@ function getItem(label, key, icon, children) {
 }
 
 const items = [
-    getItem('User', 'user', <UserOutlined />),
-    getItem('Movie', 'movie', <TeamOutlined />),
-    getItem('ShowTime', 'showtime', <FileOutlined />),
+    getItem('Quản Lý Người Dùng', 'user', <TeamOutlined />),
+    getItem('Quản Lý Phim', 'movie', <CarryOutOutlined />, [
+        getItem('Thêm Phim Mới', 'addMovie'),
+        getItem('Danh Sách Phim', 'movieList'),
+    ]),
+
+    getItem('Quản Lý Lịch Chiếu Phim', 'showtime', <ScheduleOutlined />, [
+        getItem('Thêm Lịch Chiếu Mới', 'showtimeAddNew'),
+        getItem('Danh Sách Lịch Chiếu', 'showtimeList'),
+    ]),
     getItem('Booking', 'booking', <DesktopOutlined />),
     getItem('Report', 'report', <PieChartOutlined />),
-    getItem('Personal', 'personal', <UserOutlined />),
+    getItem('Thông Tin Cá Nhân', 'personal', <IdcardOutlined />),
 ];
 
 export default function MainAdminPage() {
     const [collapsed, setCollapsed] = useState(false);
     const { token: { colorBgContainer }, } = theme.useToken();
     const [selectedItem, setSelectedItem] = useState(null);
-    if (selectedItem === null) { setSelectedItem('movie') }
+    if (selectedItem === null) { setSelectedItem('movieList') }
+
+    const [selectedMaPhim, setSelectedMaPhim] = useState(null);
+
     const handleMenuItemClick = (key) => {
         setSelectedItem(key);
     }
+
     const breadcrumbItems = [
         <Breadcrumb.Item key="Admin">Admin</Breadcrumb.Item>,
         <Breadcrumb.Item key={selectedItem}>{selectedItem}</Breadcrumb.Item>
@@ -38,8 +51,10 @@ export default function MainAdminPage() {
 
     const componentMapping = {
         user: <UserManagement />,
-        movie: <MovieManagement />,
-        showtime: <ShowTimeManagement />,
+        addMovie: <AddMovie />,
+        movieList: <MovieList handleMenuItemClick={handleMenuItemClick} setSelectedMaPhim={setSelectedMaPhim} />,
+        showtimeAddNew: <ShowTimeAddNew maPhim={selectedMaPhim} />,
+        showtimeList: <ShowTimeList1 maPhim={selectedMaPhim} />,
         booking: <BookingManagement />,
         report: <ReportManagement />,
         personal: <PersonalPage />,
