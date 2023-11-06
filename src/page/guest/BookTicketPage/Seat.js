@@ -12,14 +12,11 @@ export default function Seat({ seat, isChecked }) {
         }
     };
     return (
-        <div className="col p-0">
-            <button
-                style={{ width: 40, margin: 5 }}
-                className={`text-center px-0 btn ${seat.taiKhoanNguoiDat !== null ? 'btn-dark' : isChecked ? 'btn-success' : seat.loaiGhe === 'Thuong' ? 'btn-light' : 'btn-warning'}`}
-                disabled={seat.taiKhoanNguoiDat !== null}
-                onClick={handleButtonClick}
-            >{seat.taiKhoanNguoiDat !== null ? 'X' : seat.tenGhe}
-            </button>
-        </div>
+        <button
+            className={`lg:w-10 lg:h-10 text-xs lg:text-lg leading-none pb-3.5 w-5 h-5 m-1 text-center px-0 btn ${seat.taiKhoanNguoiDat !== null ? 'btn-dark' : isChecked ? 'btn-success' : seat.loaiGhe === 'Thuong' ? 'btn-light' : 'btn-warning'}`}
+            disabled={seat.taiKhoanNguoiDat !== null}
+            onClick={handleButtonClick}
+        >{seat.taiKhoanNguoiDat !== null ? 'X' : seat.tenGhe}
+        </button>
     );
 }

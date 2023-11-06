@@ -1,5 +1,5 @@
-import { Tabs, message } from 'antd';
-import React, { useState } from 'react'
+import { ConfigProvider, Tabs, message } from 'antd';
+import React, { useEffect, useState } from 'react'
 import { getShowTimeByMovie } from '../../../api/mainApi';
 import { NavLink } from 'react-router-dom';
 
@@ -10,20 +10,22 @@ export default function ShowTimeListByMovie({ maPhim }) {
             let response = await getShowTimeByMovie(maPhim);
             setTheaterGroupList(response.data.content);
         } catch {
-            message.error("Đã có lỗi xảy ra");
+            message.error('Đã có lỗi xảy ra');
         }
     };
 
-    fetchDataMovieDetail();
+    useEffect(() => {
+        fetchDataMovieDetail();
+    }, []);
 
     const renderShowTimeList = (theater) => {
         return theater.lichChieuPhim.map((show, index) => {
             return (
-                <div key={index} className='col-3 p-1'>
+                <div key={index}>
                     <NavLink to={`/purchasing/:${show.maLichChieu}`}>
-                        <button className='btn btn-light my-2'>
-                            <span className='text-success'>{show.ngayChieuGioChieu.substring(0, 10)}</span> -
-                            <span className='text-danger'><b> {show.ngayChieuGioChieu.substring(14, 20)}</b></span>
+                        <button className='btn btn-dark px-0 mx-1 lg:ml-4 my-2 w-full lg:w-40'>
+                            <span className='text-white'>{show.ngayChieuGioChieu.substring(0, 10)}</span> -
+                            <span className='text-yellow-500'><b> {show.ngayChieuGioChieu.substring(14, 20)}</b></span>
                         </button>
                     </NavLink>
                 </div>
@@ -41,16 +43,17 @@ export default function ShowTimeListByMovie({ maPhim }) {
                     const theaterUpdate = {
                         key: theater.maCumRap,
                         label: (
-                            <div className="text-left" style={{ width: 300 }}>
-                                <h6 className="text-success">{theater.tenCumRap.toUpperCase()}</h6>
-                                <p className="m-0">
+                            <div className='p-0 w-40 lg:w-80 text-left overflow-hidden'>
+                                <h6 className='text-yellow-500 font-bold'>{theater.tenCumRap.toUpperCase().replace('STAR CINEPLEX', '').replace('VINCOM', '')}</h6>
+                                <p className='m-0 w-full text-white overflow-hidden'>
                                     {theater.diaChi.substring(0, 40)}
                                     {theater.diaChi.length > 40 ? '...' : ''}
                                 </p>
-                                <span className="text-danger">[Chi tiết]</span>
+                                <span className='text-green-500'>[Chi tiết]</span>
                             </div>
                         ),
-                        children: <div className="row">{showTimeList}</div>,
+                        children: <div
+                            className='grid grid-cols-1 lg:grid-cols-4 gap-2'>{showTimeList}</div>,
                     };
                     theaterArr.push(theaterUpdate);
                 }
@@ -64,27 +67,39 @@ export default function ShowTimeListByMovie({ maPhim }) {
             let theaterArr = renderTheaterList(theaterGroup);
             const theatherGroupUpdate = {
                 key: theaterGroup.maHeThongRap,
-                label: <img width={80} src={theaterGroup.logo} alt={theaterGroup.tenHeThongRap} />,
+                label: <img className={'lg:w-20 w-12 p-0'} src={theaterGroup.logo} alt={theaterGroup.tenHeThongRap} />,
                 children:
                     <Tabs
                         defaultActiveKey={1}
                         tabPosition={'left'}
                         items={theaterArr}
-                        style={{ maxHeight: 750 }}
+                        className='max-h-750'
                     />,
             }
             if (theaterArr.length !== 0) { theaterGroupArr.push(theatherGroupUpdate); }
         })
     }
     return (
-        <div className='container' style={{ margin: 50 }}>
-            <h1 className={theaterGroupArr.length === 0 ? 'd-block' : 'd-none'}>Chưa có Thời gian chiếu phim cụ thể. Vui lòng thử lại sau</h1>
-            <Tabs
-                defaultActiveKey={1}
-                tabPosition={'left'}
-                items={theaterGroupArr}
-                className={theaterGroupArr.length !== 0 ? 'border' : ''}
-                style={{ maxHeight: 750 }} />
-        </div>
+        <div className='pt-32 pb-5 container text-center'>
+            <div className='text-center'><span className='px-4 py-3 lg:text-3xl text-2xl my-2 mx-auto bg-red-700 font-semibold text-white text-center rounded-lg'
+            >Rạp và Lịch Chiếu Phim</span></div>
+            <h1 className={`mt-5 text-3xl font-bold ${theaterGroupArr.length === 0 ? 'block' : 'hidden'}`}
+            >Chưa có Thời gian chiếu phim cụ thể.<br /> Vui lòng thử lại sau</h1>
+            <div className='bg-slate-900'>
+                <ConfigProvider
+                    theme={{
+                        token: {
+                            colorPrimary: 'rgb(250 204 21 / var(--tw-text-opacity))',
+                        },
+                    }}
+                >
+                    <Tabs
+                        defaultActiveKey={1}
+                        tabPosition={'top'}
+                        items={theaterGroupArr}
+                        className={`mt-10 lg:p-2 lg:mb-2 max-h-750 overflow-hidden ${theaterGroupArr.length !== 0 ? 'border' : ''}`} />
+                </ConfigProvider>
+            </div>
+        </div >
     )
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { message } from 'antd';
+import { ConfigProvider, message } from 'antd';
 import { Tabs } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { getShowTimeByTheaterGroup } from '../../../api/mainApi';
@@ -16,15 +16,17 @@ export default function ShowTimeListByTheater() {
         }
     };
     useEffect(() => { fetchDataTheaterList(); }, []);
-
+    function handleButtonClick() {
+        window.scrollTo(0, 0);
+    }
     const renderMovieShowTime = (movie) => {
         return movie.lstLichChieuTheoPhim.splice(0, 4).map((show, index) => {
             return (
-                <div key={index} className='col'>
+                <div key={index}>
                     <NavLink to={`/purchasing/:${show.maLichChieu}`}>
-                        <button className='btn btn-light my-2'>
-                            <span className='text-success'>{show.ngayChieuGioChieu.substring(0, 10)}</span> -
-                            <span className='text-danger'><b> {show.ngayChieuGioChieu.substring(14, 20)}</b></span>
+                        <button className='btn btn-dark my-2 w-full'>
+                            <span className='text-white'>{show.ngayChieuGioChieu.substring(0, 10)}</span> -
+                            <span className=' text-yellow-300'><b> {show.ngayChieuGioChieu.substring(14, 20)}</b></span>
                         </button>
                     </NavLink>
                 </div>
@@ -36,15 +38,19 @@ export default function ShowTimeListByTheater() {
         return theater.danhSachPhim.map((movie) => {
             if (movie.lstLichChieuTheoPhim.length !== 0) {
                 return (
-                    <div key={movie.maPhim} className='row ml-2 py-2 border-bottom'>
-                        <div className="col-2 p-0"><img className='mx-2' style={{ width: 110, height: 160 }} src={movie.hinhAnh} alt='' /></div>
-                        <div className="col-10 p-0 pr-2">
-                            <div className="row">
-                                <div className='col-12'>
-                                    <h5 className="p-2 m-0 text-warning font-bold">{movie.tenPhim.toUpperCase()}<span className='text-dark'> ({movie.maPhim})</span></h5>
-                                </div>
-                                {renderMovieShowTime(movie)}
-                            </div>
+                    <div key={movie.maPhim} className='flex flex-col lg:flex-row lg:ml-3 py-2 border-bottom'>
+                        <div className='md:flex-none text-center my-auto'>
+                            <img className='mx-auto' style={{ width: 120, height: 160 }} src={movie.hinhAnh} alt='' />
+                            <NavLink to={`/detail/:${movie.maPhim}`}>
+                                <button type="button" className="btn btn-red my-3"
+                                    style={{ maxWidth: 200, minWidth: 120 }}
+                                    onClick={handleButtonClick}
+                                >Chi Tiết Phim</button>
+                            </NavLink>
+                        </div>
+                        <div className='flex-auto mx-auto pl-2'>
+                            <h5 className="p-2 m-0 text-warning font-bold">{movie.tenPhim.toUpperCase()}<span className='text-dark d-none'> ({movie.maPhim})</span></h5>
+                            <div className="grid lg:grid-cols-4 gap-2 grid-cols-1">{renderMovieShowTime(movie)}</div>
                         </div>
                     </div>
                 )
@@ -67,12 +73,17 @@ export default function ShowTimeListByTheater() {
                 if (!isEmpty) {
                     return {
                         key: theater.maCumRap,
-                        label: <div className='text-left' style={{ width: 300 }}>
-                            <h6 className='text-success'>{theater.tenCumRap.toUpperCase().replace(" STAR CINEPLEX", "")}</h6>
-                            <p className='m-0'>{theater.diaChi.substring(0, 40)}{theater.diaChi.length > 40 ? '...' : ''}</p>
-                            <span className='text-danger'>[Chi tiết]</span></div>,
+                        label: (
+                            <div className='text-left p-0 w-40 lg:w-80'>
+                                <h6 className='text-yellow-500 font-bold'>{theater.tenCumRap.toUpperCase().replace(" STAR CINEPLEX", "").replace("VINCOM", "")}</h6>
+                                <p className='m-0 text-white w-full overflow-hidden'>
+                                    {theater.diaChi.substring(0, 40)}
+                                    {theater.diaChi.length > 40 ? '...' : ''}</p>
+                                <span className='text-green-500'>[Chi tiết]</span>
+                            </div>
+                        ),
                         children: (
-                            <div style={{ height: 750, overflow: 'scroll' }}>
+                            <div style={{ maxHeight: 750, overflow: 'scroll' }}>
                                 {renderMovieList(theater)}
                             </div>
                         ),
@@ -87,7 +98,7 @@ export default function ShowTimeListByTheater() {
     theaterGroupList.forEach(theaterGroup => {
         const theaterUpdate = {
             key: theaterGroup.maHeThongRap,
-            label: <img width={80} src={theaterGroup.logo} alt='' />,
+            label: <img className={'lg:w-20 w-12 p-0'} src={theaterGroup.logo} alt='' />,
             children: <Tabs
                 defaultActiveKey={1}
                 tabPosition={'left'}
@@ -99,14 +110,26 @@ export default function ShowTimeListByTheater() {
     })
 
     return (
-        <div className='container' style={{ margin: 50 }}>
-            <Tabs
-                defaultActiveKey={1}
-                tabPosition={'left'}
-                items={theaterGroupListArr}
-                className={theaterGroupListArr.length !== 0 ? 'border' : ''}
-                style={{ maxHeight: 750 }}
-            />
+        <div className='container pt-32 pb-5'>
+            <div className='text-center'><span className='px-4 py-3 lg:text-3xl text-2xl my-2 mx-auto bg-red-700 font-semibold text-white text-center rounded-lg'
+            >Rạp và Lịch Chiếu Phim</span></div>
+            <div className=' bg-slate-900'>
+                <ConfigProvider
+                    theme={{
+                        token: {
+                            colorPrimary: 'rgb(250 204 21 / var(--tw-text-opacity))',
+                        },
+                    }}
+                >
+                    <Tabs
+                        defaultActiveKey={1}
+                        tabPosition={'top'}
+                        items={theaterGroupListArr}
+                        className={`mt-10 p-2 lg:mb-2 ${theaterGroupListArr.length !== 0 ? 'border' : ''}`}
+                        style={{ height: 750, overflow: 'hidden' }}
+                    />
+                </ConfigProvider>
+            </div>
         </div>
     )
 }

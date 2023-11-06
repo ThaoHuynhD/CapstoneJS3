@@ -1,6 +1,5 @@
-import { Select, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { message } from 'antd';
+import { Select, message } from 'antd';
 import { getShowTimeByTheaterGroup } from '../../../api/mainApi';
 import { NavLink } from 'react-router-dom';
 
@@ -73,41 +72,42 @@ export default function MovieFilterByName() {
             })
     })
     return (
-        <div className="container pt-5 mx-auto">
-            <Space wrap>
-                <Select
-                    defaultValue="Chọn Phim"
-                    style={{
-                        width: 200,
-                    }}
-                    options={movieNameArr}
-                    onChange={handleMovieSelection}
-                />
-                <Select
-                    defaultValue="Chọn Rạp Phim"
-                    style={{
-                        width: 200,
-                    }}
-                    options={movieTheatherArr}
-                    onChange={handleTheatherSelection}
-                    disabled={movieSelected === null ? true : false}
-                />
-                <Select
-                    defaultValue="Chọn Suất Chiếu"
-                    style={{
-                        width: 200,
-                    }}
-                    options={movieShowTimeArr}
-                    onChange={handleShowSelection}
-                    disabled={theatherSelected === null ? true : false}
-                />
-                <NavLink to={`/purchasing/:${showSelected}`}>
-                    <button
-                        className='btn btn-red m-3'
-                        disabled={showSelected === null ? true : false}
-                    >Mua Vé</button>
-                </NavLink>
-            </Space>
+        <div className='pt-20'>
+            <div className=" relative">
+                <p className=' absolute -top-6 left-0 text-center w-full'>
+                    <span className='px-5 py-3 lg:text-3xl text-2xl mx-auto font-semibold bg-red-700 text-white rounded-lg'>Tìm kiếm lịch chiếu phim</span>
+                </p>
+                <div className="container mt-20 pt-12 pb-4 px-8 bg-slate-800 text-center rounded">
+                    <div className='grid lg:grid-cols-4 grid-cols-1 gap-8'>
+                        <Select
+                            defaultValue="Chọn Phim"
+                            className='w-full'
+                            options={movieNameArr}
+                            onChange={handleMovieSelection}
+                        />
+                        <Select
+                            defaultValue="Chọn Rạp Phim"
+                            className='w-full'
+                            options={movieTheatherArr}
+                            onChange={handleTheatherSelection}
+                            disabled={movieSelected === null ? true : false}
+                        />
+                        <Select
+                            defaultValue="Chọn Suất Chiếu"
+                            className='w-full'
+                            options={movieShowTimeArr}
+                            onChange={handleShowSelection}
+                            disabled={theatherSelected === null ? true : false}
+                        />
+                        <NavLink to={`/purchasing/:${showSelected}`}>
+                            <button
+                                className='btn btn-red w-full'
+                                disabled={showSelected === null ? true : false}
+                            >Mua Vé</button>
+                        </NavLink>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

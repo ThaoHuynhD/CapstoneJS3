@@ -1,7 +1,7 @@
 import React from 'react'
 import { getTicketBooked } from '../../../api/mainApi';
 import { PUCHASING_CART } from '../../../constant/constant';
-import { message } from 'antd';
+import { Image, message } from 'antd';
 import { useDispatch } from 'react-redux';
 
 export default function BookingCart({ movieShowDetail, cart }) {
@@ -39,7 +39,6 @@ export default function BookingCart({ movieShowDetail, cart }) {
             </tbody>
         )
     }
-    // TODO:=====================
     const fetchData = async (values) => {
         try {
             const response = await getTicketBooked(values);
@@ -49,7 +48,6 @@ export default function BookingCart({ movieShowDetail, cart }) {
             });
             message.success("Mua vé thành công");
             setTimeout(() => {
-                // window.location.reload();
                 window.location.href = '/personal';
             }, 1000);
         } catch (error) {
@@ -76,39 +74,44 @@ export default function BookingCart({ movieShowDetail, cart }) {
     }
 
     return (
-        <div className='container'>
-            <table className='table'>
+        <div className='container pt-20'>
+            <div className='text-center mb-5'><span className='px-4 py-3 lg:text-3xl text-2xl mx-auto bg-red-700 font-semibold text-white text-center rounded-lg'
+            >Giỏ Hàng</span></div>
+            <table className='table text-white border'>
                 <thead>
-                    <tr>
+                    <tr className='text-center text-yellow-400'>
                         <th>Title</th>
                         <th>Detail</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><b>Tên cụm rạp:</b></td>
+                        <td><b className='text-yellow-400'>Tên cụm rạp:</b></td>
                         <td>{tenCumRap}</td>
                     </tr>
                     <tr>
-                        <td><b>Địa Chỉ:</b></td>
+                        <td><b className='text-yellow-400'>Địa Chỉ:</b></td>
                         <td>{diaChi}</td>
                     </tr>
                     <tr>
-                        <td><b>Thời Gian Chiếu:</b></td>
+                        <td><b className='text-yellow-400'>Thời Gian Chiếu:</b></td>
                         <td>{ngayChieu} - {gioChieu}</td>
                     </tr>
                     <tr>
-                        <td><b>Tên Phim:</b></td>
+                        <td><b className='text-yellow-400'>Tên Phim:</b></td>
                         <td>{tenPhim}</td>
                     </tr>
                     <tr>
-                        <td><b>Hình Ảnh:</b></td>
-                        <td><img width={200} src={hinhAnh} alt='' /></td>
+                        <td><b className='text-yellow-400'>Hình Ảnh:</b></td>
+                        <td className=''><Image width={150} src={hinhAnh} alt=''></Image></td>
                     </tr>
+
                     <tr>
-                        <td><b>Vé Chọn:</b></td>
-                        <td>{cart.length !== 0 ? <table className='table'>
+                        <td colSpan={2} className='p-0'>{cart.length !== 0 ? <table className='table text-white border-none mt-3'>
                             <thead>
+                                <tr>
+                                    <td colSpan={3}><b className='text-yellow-400'>Chi Tiết Vé Chọn:</b></td>
+                                </tr>
                                 <tr>
                                     <th>Danh sách vé:</th>
                                     <th>Hạng vé:</th>
@@ -120,12 +123,12 @@ export default function BookingCart({ movieShowDetail, cart }) {
                         </td>
                     </tr>
                     <tr>
-                        <td><b>Tổng tiền:</b></td>
-                        <td>
-                            <h4 className='text-success'>{cart.reduce((sum, seat) => sum + seat.giaVe, 0).toLocaleString()}</h4>
+                        <td><b className='text-yellow-400'>Tổng tiền:</b></td>
+                        <td className='text-yellow-500 font-bold text-3xl text-center'>
+                            {cart.reduce((sum, seat) => sum + seat.giaVe, 0).toLocaleString()} VND
                         </td>
                     </tr>
-                    <tr><td><button className='btn btn-danger' onClick={() => handleShoppingCart(shoppingValue)}>Buy Ticket</button></td></tr>
+                    <tr><td colSpan={2} className='text-center'><button className='btn btn-red mt-3 w-full' onClick={() => handleShoppingCart(shoppingValue)}>Buy Ticket</button></td></tr>
                 </tbody>
             </table>
         </div>

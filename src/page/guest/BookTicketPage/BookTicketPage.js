@@ -10,7 +10,7 @@ export default function BookTicketPage() {
   let params = useParams();
   let maLichChieu = params.maLichChieu.substring(1, params.maLichChieu.length);
   let cart = useSelector((state) => state.cartReducer.cart);
-  
+
   const [movieShowDetail, setMovieShowDetail] = useState([]);
   useEffect(() => {
     const fetchDataMovieShowDetail = async () => {
@@ -24,12 +24,12 @@ export default function BookTicketPage() {
     fetchDataMovieShowDetail();
   }, [maLichChieu]);
   return (
-    <div className="container p-10">
-      <div className='row'>
-        <div className='col-7'>
+    <div className="container lg:p-10">
+      <div className='flex lg:flex-row flex-col'>
+        <div className='mx-auto'>
           <SeatList movieShowDetail={movieShowDetail} cart={cart} />
         </div>
-        <div className='col-5'>
+        <div className='xl:ml-5'>
           <BookingCart movieShowDetail={movieShowDetail} cart={cart} />
         </div>
       </div>

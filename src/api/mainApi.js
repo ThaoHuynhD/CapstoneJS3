@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BASE_URL, configHeaders, configHeaders2 } from "./config";
-const maNhom = 'GP01';
+const maNhom = 'GP09';
 export const getTicketBooked = (ticketInfo) => {
     return axios({
         url: `${BASE_URL}/QuanLyDatVe/DatVe`,

@@ -9,37 +9,37 @@ import PersonalPage from './page/PersonalPage/PersonalPage';
 import BookTicketPage from './page/guest/BookTicketPage/BookTicketPage';
 import { userLocalStorage } from './api/localServices';
 import MainAdminPage from './page/admin/MainAdminPage/MainAdminPage';
+import Layout from './template/Layout';
 
 function App() {
   let info = userLocalStorage.get();
   let isAdmin;
   if (info !== null && info !== undefined) { isAdmin = info.maLoaiNguoiDung === 'QuanTri'; }
   const userRoutes = [
-    { path: '/', element: <HomePage /> },
-    { path: '/homepage', element: <HomePage /> },
-    { path: '/sign-in', element: <SignInPage /> },
-    { path: '/sign-up', element: <SignUpPage /> },
-    { path: '/detail/:maPhim', element: <MovieDetailPage /> },
-    { path: '/personal', element: <PersonalPage /> },
-    { path: '/purchasing/:maLichChieu', element: <BookTicketPage /> },
-    { path: '/*', element: <NotFoundPage /> },
+    { path: '/', element: <Layout><HomePage /></Layout> },
+    { path: '/homepage', element: <Layout><HomePage /></Layout> },
+    { path: '/sign-in', element: <Layout><SignInPage /></Layout> },
+    { path: '/sign-up', element: <Layout><SignUpPage /></Layout> },
+    { path: '/detail/:maPhim', element: <Layout><MovieDetailPage /></Layout> },
+    { path: '/personal', element: <Layout><PersonalPage /></Layout> },
+    { path: '/purchasing/:maLichChieu', element: <Layout><BookTicketPage /></Layout> },
+    { path: '/*', element: <Layout><NotFoundPage /></Layout> },
   ];
 
   const adminRoutes = [
-    { path: '/', element: <MainAdminPage /> },
-    { path: '/sign-in', element: <SignInPage /> },
-    { path: '/sign-up', element: <SignUpPage /> },
-    { path: '/personal', element: <PersonalPage /> },
-    { path: '/*', element: <NotFoundPage /> },
-    { path: '/admin', element: <MainAdminPage /> }]
+    { path: '/', element: <Layout><MainAdminPage /></Layout> },
+    { path: '/sign-in', element: <Layout><SignInPage /></Layout> },
+    { path: '/sign-up', element: <Layout><SignUpPage /></Layout> },
+    { path: '/personal', element: <Layout><PersonalPage /></Layout> },
+    { path: '/*', element: <Layout><NotFoundPage /></Layout> },
+    { path: '/admin', element: <Layout><MainAdminPage /></Layout> }]
 
   let selectedRoutes = userRoutes;
   if (isAdmin) { selectedRoutes = adminRoutes }
-
   return (
     <div className="App">
       <BrowserRouter>
-        <div className={isAdmin ? '' : 'pt-20'}>
+        <div className={isAdmin ? 'pt-24' : ''}>
           <Routes>
             {selectedRoutes.map((route) => (
               <Route key={route.path} path={route.path} element={route.element} />

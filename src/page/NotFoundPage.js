@@ -4,16 +4,23 @@ import { useNavigate } from 'react-router-dom';
 export default function NotFoundPage() {
     let navigate = useNavigate();
     return (
-        <div className='pageNotFound text-white text-center'
+        <main className="p-52 grid min-h-full h-screen w-screen place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8"
             style={{
-                padding: 200, backgroundImage: `url(./img/bg-page.jpg)`,
-                backgroundSize: 'cover', height: '100vh', width: '100vw'
+                backgroundImage: `url(https://i.pinimg.com/736x/25/fb/a5/25fba5e5fee645836650cc4eca58ef73.jpg)`,
+                backgroundSize: 'cover',
             }}>
-            <h1 style={{ fontSize: 200 }}><strong>404</strong></h1>
-            <h3 className='p-3'><b>WE'RE SORRY. BUT THE PAGE YOU REQUESTED WAS NOT FOUND</b></h3>
-            <button className='btn btn-light mr-3' onClick={() => { navigate('/homepage') }}><b>GO HOME</b></button>
-
-            <button className='btn btn-outline-light'>CONTACT US</button>
-        </div>
+            <div className="text-center">
+                <p className="text-3xl font-semibold text-orange-600">404</p>
+                <h1 className="mt-4 text-6xl font-bold tracking-tight text-white sm:text-5xl">Page not found</h1>
+                <p className="mt-6 text-base leading-7 text-white">Sorry, we couldn’t find the page you’re looking for.</p>
+                <div className="mt-10 flex items-center justify-center gap-x-6">
+                    <button onClick={() => { navigate('/homepage') }}
+                        className="rounded-md bg-orange-700 px-3.5 py-2.5 text-sm font-semibold text-white 
+                    shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 
+                    focus-visible:outline-offset-2 focus-visible:outline-orange-600">Go back home</button>
+                    <button className="text-sm font-semibold text-white">Contact support <span aria-hidden="true">&rarr;</span></button>
+                </div>
+            </div>
+        </main>
     )
 }

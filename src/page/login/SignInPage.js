@@ -53,44 +53,52 @@ export default function SignInPage() {
     }
 
     return (
-        <Form className='mx-auto my-5 border p-5 text-center'
-            {...formItemLayout}
-            form={form}
-            name="register"
-            onFinish={onFinish}
-            style={{
-                maxWidth: 800,
-            }}
-            scrollToFirstError
-        >
-            <h1 className='pb-5'>Đăng nhập</h1>
-            <Form.Item name="taiKhoan" label="Tài Khoản"
-                rules={[
-                    {
-                        type: 'taiKhoan',
-                        message: 'Tài khoản nhập sai hoặc không tồn tại!',
-                    },
-                    {
-                        required: true,
-                        message: 'Vui lòng nhập thông tin tài khoản!',
-                    },
-                ]}
-            >
-                <Input />
-            </Form.Item>
-            <Form.Item name="matKhau" label="Mật Khẩu"
-                rules={[
-                    {
-                        required: true,
-                        message: 'Vui lòng nhập thông tin mật khẩu!',
-                    },
-                ]}
-                hasFeedback
-            >
-                <Input.Password />
-            </Form.Item>
-            <Button type="primary" htmlType="submit">Đăng nhập</Button>
-            <p className='pt-3'>Chưa có tài khoản, đăng ký <NavLink to='/sign-up'>tại đây</NavLink></p>
-        </Form>
+        <div id='sign-in' className='w-screen h-screen relative bg-black'>
+            <div className='container border '>
+                <div className='text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
+                    <Form
+                        className='p-20 border bg-white rounded-2xl'
+                        theme={'dark'}
+                        {...formItemLayout}
+                        form={form}
+                        name="register"
+                        onFinish={onFinish}
+                        style={{
+                            maxWidth: 1000,
+                        }}
+                        scrollToFirstError
+                    >
+                        <h1 className='pb-5 text-4xl'>Đăng nhập</h1>
+                        <Form.Item name="taiKhoan" label="Tài Khoản"
+                            rules={[
+                                {
+                                    type: 'taiKhoan',
+                                    message: 'Tài khoản nhập sai hoặc không tồn tại!',
+                                },
+                                {
+                                    required: true,
+                                    message: 'Vui lòng nhập thông tin tài khoản!',
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                        <Form.Item name="matKhau" label="Mật Khẩu"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Vui lòng nhập thông tin mật khẩu!',
+                                },
+                            ]}
+                            hasFeedback
+                        >
+                            <Input.Password />
+                        </Form.Item>
+                        <Button className='btn-red' htmlType="submit">Đăng nhập</Button>
+                        <p className='pt-3'>Chưa có tài khoản, đăng ký <NavLink to='/sign-up' className={'text-blue-800 font-bold'}>tại đây</NavLink></p>
+                    </Form>
+                </div>
+            </div>
+        </div>
     )
 }
