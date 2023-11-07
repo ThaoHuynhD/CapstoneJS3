@@ -34,7 +34,7 @@ export default function BookingHistory({ userDetail }) {
     const renderDanhSachDatVe = () => {
         return thongTinDatVe.map((ticketBill, index) => {
             return (
-                <div className='col-6 p-2.5' key={index}>
+                <div className='p-2.5' key={index}>
                     <table className='table m-0 border bg-slate-800 text-white rounded-xl overflow-hidden '>
                         <tbody>
                             <tr>
@@ -61,12 +61,12 @@ export default function BookingHistory({ userDetail }) {
 
     return (
         <div className=''>
-            <div class="text-center">
-                <span className='px-5 py-2 text-3xl my-5 mx-auto font-semibold bg-red-700 text-white text-center rounded-lg'
-                >Danh Sách Vé Bạn Đã Đặt</span>
+            <div className="text-center">
+                <span className='lg:px-5 px-2 py-2 text-3xl my-5 mx-auto font-semibold bg-red-700 text-white text-center rounded-lg'
+                >Danh Sách Vé Đã Đặt</span>
             </div>
             <div className='mt-3'>
-                <div className="row">{renderDanhSachDatVe()}</div>
+                <div className="grid lg:grid-cols-2 grid-cols-1">{renderDanhSachDatVe()}</div>
             </div>
         </div>
     )

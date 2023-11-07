@@ -13,13 +13,14 @@ import Layout from './template/Layout';
 
 function App() {
   let info = userLocalStorage.get();
+
   let isAdmin;
   if (info !== null && info !== undefined) { isAdmin = info.maLoaiNguoiDung === 'QuanTri'; }
   const userRoutes = [
     { path: '/', element: <Layout><HomePage /></Layout> },
     { path: '/homepage', element: <Layout><HomePage /></Layout> },
-    { path: '/sign-in', element: <Layout><SignInPage /></Layout> },
-    { path: '/sign-up', element: <Layout><SignUpPage /></Layout> },
+    { path: '/sign-in', element: <SignInPage /> },
+    { path: '/sign-up', element: <SignUpPage /> },
     { path: '/detail/:maPhim', element: <Layout><MovieDetailPage /></Layout> },
     { path: '/personal', element: <Layout><PersonalPage /></Layout> },
     { path: '/purchasing/:maLichChieu', element: <Layout><BookTicketPage /></Layout> },
@@ -27,12 +28,12 @@ function App() {
   ];
 
   const adminRoutes = [
-    { path: '/', element: <Layout><MainAdminPage /></Layout> },
-    { path: '/sign-in', element: <Layout><SignInPage /></Layout> },
-    { path: '/sign-up', element: <Layout><SignUpPage /></Layout> },
-    { path: '/personal', element: <Layout><PersonalPage /></Layout> },
-    { path: '/*', element: <Layout><NotFoundPage /></Layout> },
-    { path: '/admin', element: <Layout><MainAdminPage /></Layout> }]
+    { path: '/', element: <MainAdminPage /> },
+    { path: '/sign-in', element: <SignInPage /> },
+    { path: '/sign-up', element: <SignUpPage /> },
+    { path: '/personal', element: <PersonalPage /> },
+    { path: '/*', element: <NotFoundPage /> },
+    { path: '/admin', element: <MainAdminPage /> }]
 
   let selectedRoutes = userRoutes;
   if (isAdmin) { selectedRoutes = adminRoutes }

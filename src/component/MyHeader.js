@@ -2,16 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { Menu } from 'antd';
 import { userDetailLocalStorage, userLocalStorage } from '../api/localServices';
 import { useNavigate } from 'react-router-dom';
-import { MenuOutlined } from '@ant-design/icons';
+import { CloseOutlined, MenuOutlined } from '@ant-design/icons';
 
 export default function MyHeader() {
     let navigate = useNavigate();
     let info = userLocalStorage.get();
     let isAdmin;
     if (info !== null && info !== undefined) { isAdmin = info.maLoaiNguoiDung === 'QuanTri'; }
+    let mobile;
+    if (window.innerWidth < 768) { mobile = true; } else { mobile = false; }
     const [current, setCurrent] = useState('/');
     const [showMobileMenu, setShowMobileMenu] = useState(false);
-    const [isMobileWidth, setIsMobileWidth] = useState(false);
+    const [isMobileWidth, setIsMobileWidth] = useState(mobile);
     console.log("IsMobileWidth: ", isMobileWidth);
     const toggleMobileMenu = () => {
         setShowMobileMenu(!showMobileMenu);
@@ -21,8 +23,6 @@ export default function MyHeader() {
         const handleResize = () => {
             if (window.innerWidth < 768) {
                 setIsMobileWidth(true);
-                console.log("sMobileWidth: ", isMobileWidth);
-                setShowMobileMenu(true);
             } else {
                 setIsMobileWidth(false);
             }
@@ -52,11 +52,7 @@ export default function MyHeader() {
     ];
     const menuRightArr = [
         {
-            label: info !== null ? (
-                <div className="overflow-hidden relative max-w-md mx-auto flex items-center gap-2">
-                    <strong className="text-white">{info.taiKhoan}</strong>
-                </div>
-            ) : 'Đăng Nhập',
+            label: info !== null ? (showMobileMenu ? 'Trang Cá Nhân' : info.taiKhoan) : 'Đăng Nhập',
             key: info !== null ? 'personal' : 'sign-in',
             flexRight: true,
             showMenu: true,
@@ -67,12 +63,10 @@ export default function MyHeader() {
             showMenu: true,
         },
         {
-            label: (
-                <button className={`btn btn-dark px-2.5 ${isMobileWidth ? 'block' : 'hidden'}`}
-                    onClick={() => handleMenuItemClick('menuBar')}>
+            label: showMobileMenu ? <CloseOutlined /> :
+                (<button className={`mx-auto ${isMobileWidth ? 'block' : 'hidden'}`}>
                     <MenuOutlined />
-                </button>
-            ),
+                </button>),
             key: 'menuBar',
             showMenu: true,
         },
@@ -93,7 +87,7 @@ export default function MyHeader() {
         }
     };
     function scrollToTop() {
-        window.scrollTo(0, 0); // Scroll to the top (0, 0 coordinates)
+        window.scrollTo(0, 0);
     }
     const handleMenuItemClick = (key) => {
         setCurrent(key);
@@ -133,7 +127,7 @@ export default function MyHeader() {
                         <Menu
                             id='myHeader'
                             theme={'dark'}
-                            className='lg:p-2 py-2 m-0 text-center lg:text-left align-middle'
+                            className='py-2 m-0 text-center align-middle'
                             onClick={({ key }) => handleMenuItemClick(key)}
                             selectedKeys={[current]}
                             mode={showMobileMenu ? 'vertical' : 'horizontal'}
@@ -142,7 +136,8 @@ export default function MyHeader() {
                                 return (item.showMenu || showMobileMenu) && (
                                     <Menu.Item
                                         key={item.key}
-                                        className={`px-2 ${item.flexRight ? 'ml-auto' : 'ml-0'}`}
+                                        className={`px-2 ${item.flexRight && showMobileMenu === false ? 'ml-auto' : 'ml-0'} 
+                                        `}
                                     >
                                         {item.label}
                                     </Menu.Item>
@@ -156,7 +151,7 @@ export default function MyHeader() {
                             className='lg:p-2 py-2 m-0 text-center lg:text-left align-middle'
                             onClick={({ key }) => handleMenuItemClick(key)}
                             selectedKeys={[current]}
-                            mode={showMobileMenu ? 'vertical' : 'horizontal'}
+                            mode={'horizontal'}
                         >
                             {menuUserArr.map((item) => (
                                 <Menu.Item

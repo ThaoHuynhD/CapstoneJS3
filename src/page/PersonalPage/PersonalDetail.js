@@ -83,8 +83,9 @@ export default function PersonalDetail({ userDetail }) {
     };
     return (
         <div className='container'>
-            <div class="text-center py-5"><span className='px-5 py-2 text-3xl my-5 mx-auto font-semibold bg-red-700 text-white text-center rounded-lg'>Thông tin cá nhân của bạn</span></div>
-            <div className=' w-1/2 mx-auto'>
+            <div className="text-center py-5"><span className='lg:px-5 px-2 py-2 text-3xl my-5 mx-auto font-semibold 
+            bg-red-700 text-white text-center rounded-lg'>Thông tin cá nhân</span></div>
+            <div className=' lg:w-1/2 mx-auto'>
                 <table className='table border-hidden text-white bg-slate-600 rounded-2xl overflow-hidden'>
                     <tbody>
                         <tr>
@@ -109,13 +110,16 @@ export default function PersonalDetail({ userDetail }) {
                         </tr>
                     </tbody>
                 </table>
-                <div class="text-center mb-20">
+                <div className="text-center mb-20">
                     <Button className='btn-red' onClick={showModal}>
                         Cập nhật
                     </Button>
                 </div>
             </div>
-            <Modal title="Cập Nhật Thông Tin" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+            <Modal title="Cập Nhật Thông Tin" open={isModalOpen}
+                onOk={handleOk} onCancel={handleCancel}
+                footer={null}
+            >
                 <div className='p-10 mb-20 border bg-white rounded-2xl text-center'>
                     <Form
                         theme={'dark'}

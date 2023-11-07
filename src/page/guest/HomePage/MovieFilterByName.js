@@ -75,7 +75,8 @@ export default function MovieFilterByName() {
         <div className='pt-20'>
             <div className=" relative">
                 <p className=' absolute -top-6 left-0 text-center w-full'>
-                    <span className='px-5 py-3 lg:text-3xl text-2xl mx-auto font-semibold bg-red-700 text-white rounded-lg'>Tìm kiếm lịch chiếu phim</span>
+                    <span className='px-5 py-3 lg:text-3xl text-2xl mx-auto font-semibold bg-red-700 text-white rounded-lg'
+                    >Tìm kiếm lịch chiếu</span>
                 </p>
                 <div className="container mt-20 pt-12 pb-4 px-8 bg-slate-800 text-center rounded">
                     <div className='grid lg:grid-cols-4 grid-cols-1 gap-8'>
