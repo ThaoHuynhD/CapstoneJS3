@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { getDataUser, getDataUserAddNew, getDataUserDelete, getDataUserInfoUpdated, getDataUserList, getDataUserSearch } from '../../../../api/adminApi';
+import {
+  getDataUser, getDataUserAddNew, getDataUserDelete,
+  getDataUserInfoUpdated, getDataUserList, getDataUserSearch
+} from '../../../api/adminApi';
 import { Form, Input, Select, Tag, message } from 'antd';
 import { Button, Modal } from 'antd';
 import Search from 'antd/es/input/Search';
@@ -155,12 +158,14 @@ export default function UserManagement() {
   useEffect(() => {
     fetchDataUserList();
     fetchDataUserSearch();
-  },[]);
+  }, []);
   return (
     <div>
       <div className='ModalAddUser'>
-        <Modal width={800} title="Thêm Tài Khoản" open={isAddModalOpen} onCancel={handleAddCancel}>
-          <Form className='mx-auto my-5 border p-5 text-center'
+        <Modal width={900} title="Thêm Tài Khoản" open={isAddModalOpen} onCancel={handleAddCancel}
+          footer={null}
+        >
+          <Form className='mx-auto my-5 border p-3 text-center'
             {...formItemLayout}
             form={form}
             name="FormAddUser"
@@ -171,8 +176,7 @@ export default function UserManagement() {
             scrollToFirstError
           >
             <Form.Item name="taiKhoan"
-              label="taiKhoan"
-              tooltip="Bạn muốn được gọi là?"
+              label="Tên Tài Khoản"
               rules={[
                 {
                   required: true,
@@ -184,7 +188,7 @@ export default function UserManagement() {
               <Input />
             </Form.Item>
             <Form.Item name="hoTen"
-              label="hoTen"
+              label="Họ Và Tên"
               rules={[
                 {
                   required: true,
@@ -195,7 +199,7 @@ export default function UserManagement() {
               <Input />
             </Form.Item>
             <Form.Item name="matKhau"
-              label="matKhau"
+              label="Mật Khẩu"
               rules={[
                 {
                   required: true,
@@ -207,7 +211,7 @@ export default function UserManagement() {
               <Input.Password />
             </Form.Item>
             <Form.Item name="email"
-              label="e-mail"
+              label="Địa Chỉ Email"
               rules={[
                 {
                   type: 'email',
@@ -222,7 +226,7 @@ export default function UserManagement() {
               <Input />
             </Form.Item>
             <Form.Item name="soDienThoai"
-              label="soDienThoai"
+              label="Số Điện Thoại"
               rules={[
                 {
                   required: true,
@@ -235,6 +239,7 @@ export default function UserManagement() {
             <Form.Item name="maNhom"
               label="maNhom"
               initialValue={'GP01'}
+              className='hidden'
               rules={[
                 {
                   required: true,
@@ -247,6 +252,7 @@ export default function UserManagement() {
             <Form.Item name="maLoaiNguoiDung"
               label="maLoaiNguoiDung"
               initialValue={'KhachHang'}
+              className='hidden'
               rules={[
                 {
                   required: true,
@@ -256,14 +262,16 @@ export default function UserManagement() {
               ]}>
               <Input placeholder={'KhachHang'} />
             </Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button className='btn btn-red pb-1' htmlType="submit">
               Thêm người dùng
             </Button>
           </Form>
         </Modal>
       </div>
       <div className='ModalFixUser'>
-        <Modal width={800} title="Cập Nhật Tài Khoản" open={isFixModalOpen} onCancel={handleFixCancel}>
+        <Modal width={800} title="Cập Nhật Tài Khoản" open={isFixModalOpen} onCancel={handleFixCancel}
+          footer={null}
+        >
           <Form name="FormFixUser" onFinish={handleUserFix}
             className='mx-auto my-5 border p-5 text-center'
             {...formItemLayout} form={form} scrollToFirstError
@@ -357,21 +365,24 @@ export default function UserManagement() {
                 ]}
               />
             </Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button className='btn btn-red' htmlType="submit">
               Cập Nhật
             </Button>
           </Form>
         </Modal>
       </div>
-      <div className="row m-3">
-        <div className="col-10">
+      <div className="m-3">
+        <div className="text-right mb-2"><button onClick={showAddModal} className='btn btn-success'>Thêm người dùng</button></div>
+        <div className="flex">
           <Search
-            enterButton size="large" onSearch={fetchDataUserSearch}
+            enterButton
+            size="large" onSearch={fetchDataUserSearch}
             placeholder="input search text(phone number/name)"
+            className='bg-blue-500 overflow-hidden rounded-lg'
           />
-          <button className='btn btn-danger' onClick={() => { handleSearchCancel() }}>CancleSearch</button>
+          <button className={`btn btn-danger ${isSearch ? 'block' : 'hidden'}`} onClick={() => { handleSearchCancel() }}>CancleSearch</button>
         </div>
-        <div className="col-2"><button onClick={showAddModal} className='btn btn-success'>Thêm người dùng</button></div>
+
       </div>
       {renderList()}
     </div>

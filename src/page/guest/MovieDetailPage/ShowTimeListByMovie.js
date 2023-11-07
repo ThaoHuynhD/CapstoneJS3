@@ -16,7 +16,7 @@ export default function ShowTimeListByMovie({ maPhim }) {
 
     useEffect(() => {
         fetchDataMovieDetail();
-    }, []);
+    }, [maPhim]);
 
     const renderShowTimeList = (theater) => {
         return theater.lichChieuPhim.map((show, index) => {

@@ -2,13 +2,11 @@ import React, { useState } from 'react';
 import { ScheduleOutlined, TeamOutlined, IdcardOutlined, CarryOutOutlined } from '@ant-design/icons';
 import { Breadcrumb, Layout, Menu, theme, } from 'antd';
 import MyHeader from '../../../component/MyHeader';
-import UserManagement from './user/UserManagement';
-
 import PersonalPage from '../../PersonalPage/PersonalPage';
-import AddMovie from './movie/AddMovie';
-import MovieList from './movie/MovieList';
-import ShowTimeAddNew from './showtime/ShowTimeAddNew';
-import ShowTimeList1 from './showtime/ShowTimeList1';
+import AddMovie from '../movie/AddMovie';
+import MovieList from '../movie/MovieList';
+import UserManagement from '../user/UserManagement';
+import ShowTimeManagement from '../showtime/ShowTimeManagement';
 
 const { Content, Sider, Header, } = Layout;
 function getItem(label, key, icon, children) {
@@ -17,27 +15,23 @@ function getItem(label, key, icon, children) {
 
 const items = [
     getItem('Quản Lý Người Dùng', 'user', <TeamOutlined />),
-    getItem('Quản Lý Phim', 'movie', <CarryOutOutlined />, [
-        getItem('Thêm Phim Mới', 'addMovie'),
-        getItem('Danh Sách Phim', 'movieList'),
-    ]),
-    getItem('Quản Lý Lịch Chiếu Phim', 'showtime', <ScheduleOutlined />, [
-        getItem('Thêm Lịch Chiếu Mới', 'showtimeAddNew'),
-        getItem('Danh Sách Lịch Chiếu', 'showtimeList'),
-    ]),
+    getItem('Quản Lý Phim', 'movie', <CarryOutOutlined />,),
+    getItem('Quản Lý Lịch Chiếu Phim', 'showtime', <ScheduleOutlined />,),
     getItem('Thông Tin Cá Nhân', 'personal', <IdcardOutlined />),
 ];
 
 export default function MainAdminPage() {
     const [collapsed, setCollapsed] = useState(false);
     const { token: { colorBgContainer }, } = theme.useToken();
-    const [selectedItem, setSelectedItem] = useState(null);
-    if (selectedItem === null) { setSelectedItem('movieList') }
+    const [selectedItem, setSelectedItem] = useState('user');
+    console.log("selectedItem: ", selectedItem);
+    if (selectedItem === null) { setSelectedItem('user') }
 
     const [selectedMaPhim, setSelectedMaPhim] = useState(null);
 
     const handleMenuItemClick = (key) => {
         setSelectedItem(key);
+        console.log("SelectedItem: ", selectedItem);
     }
 
     const breadcrumbItems = [
@@ -47,27 +41,31 @@ export default function MainAdminPage() {
 
     const componentMapping = {
         user: <UserManagement />,
-        addMovie: <AddMovie />,
-        movieList: <MovieList handleMenuItemClick={handleMenuItemClick} setSelectedMaPhim={setSelectedMaPhim} />,
-        showtimeAddNew: <ShowTimeAddNew maPhim={selectedMaPhim} />,
-        showtimeList: <ShowTimeList1 maPhim={selectedMaPhim} />,
+        // addMovie: <AddMovie />,
+        movie: <MovieList setSelectedItem={setSelectedItem} setSelectedMaPhim={setSelectedMaPhim} />,
+        showtime: <ShowTimeManagement selectedMaPhim={selectedMaPhim} />,
         personal: <PersonalPage />,
     };
 
     return (
         <Layout style={{ minHeight: '100vh', scrollBehavior: 'smooth', overflow: 'auto' }}        >
             <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-                <Menu style={{ paddingTop: 10 }} theme="dark" defaultSelectedKeys={['user']} mode="inline" items={items} onClick={({ key }) => handleMenuItemClick(key)} />
+                <div className=' my-2 mx-auto text-center w-20 rounded-lg overflow-hidden'>
+                    <img className=''
+                        src='https://i.pinimg.com/564x/d0/d7/b0/d0d7b047ddef0af6057424fcaf1f19ce.jpg' alt='logo' />
+                </div>
+                <Menu theme="dark" defaultSelectedKeys={selectedItem} mode="inline" items={items}
+                    onClick={({ key }) => handleMenuItemClick(key)} />
             </Sider>
             <Layout>
-                <Header style={{ padding: 0, background: colorBgContainer, marginBottom: 10 }}>
+                <Header style={{ padding: 0, background: colorBgContainer }}>
                     <MyHeader />
                 </Header>
-                <Content style={{ margin: '0 16px', }} >
+                <Content style={{ margin: '0 16px', paddingTop: 10 }} >
                     <Breadcrumb style={{ margin: '16px 0', }}>
                         {breadcrumbItems}
                     </Breadcrumb>
-                    <div style={{ padding: 24, minHeight: 800, background: colorBgContainer, }}>
+                    <div style={{ padding: 10, minHeight: 800, background: colorBgContainer, }}>
                         {componentMapping[selectedItem]}
                     </div>
                 </Content>

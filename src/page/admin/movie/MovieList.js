@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { getMovieList, getMovieDetail, getMovieListSearchByName } from '../../../../api/mainApi';
-import { getDataMovieDeleteIfNoShowTime, getDataMovieUpdated } from '../../../../api/adminApi';
+import { getMovieList, getMovieDetail, getMovieListSearchByName } from '../../../api/mainApi';
+import { getDataMovieDeleteIfNoShowTime, getDataMovieUpdated } from '../../../api/adminApi';
 import { Form, Input, Switch, message, Button, Image, Modal, DatePicker } from 'antd';
 import { FormOutlined, DeleteOutlined, CalendarOutlined } from '@ant-design/icons';
 import Search from 'antd/es/input/Search';
 import TextArea from 'antd/es/input/TextArea';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import dayjs from 'dayjs';
+import AddMovie from './AddMovie';
 
 dayjs.extend(customParseFormat);
 
-export default function MovieList({ handleMenuItemClick, setSelectedMaPhim }) {
+export default function MovieList({ setSelectedItem, setSelectedMaPhim }) {
     const [movieList, setMovieList] = useState([]);
     const [movieSearchList, setMovieSearchList] = useState([]);
     const [isSearch, setIsSearch] = useState(false);
@@ -46,8 +47,9 @@ export default function MovieList({ handleMenuItemClick, setSelectedMaPhim }) {
             console.log(error);
         }
     };
-    const handleShowTimeCreate = (maPhim) => {
-        handleMenuItemClick('showtimeAddNew');
+
+    const handleShowTime = (maPhim) => {
+        setSelectedItem('showtime');
         setSelectedMaPhim(maPhim);
     }
     const renderList = () => {
@@ -77,7 +79,9 @@ export default function MovieList({ handleMenuItemClick, setSelectedMaPhim }) {
                             <td>
                                 <button className='btn btn-warning' onClick={() => { showFixModal(movie.maPhim) }}><FormOutlined /></button>
                                 <button className='btn btn-danger mx-1 ' onClick={() => { handleMovieDel(movie.maPhim) }}><DeleteOutlined /></button>
-                                <button className='btn btn-success' onClick={() => { handleShowTimeCreate(movie.maPhim) }}><CalendarOutlined /></button>
+                                {/* <button className='btn btn-success' onClick={() => { handleShowTimeCreate(movie.maPhim) }}><CalendarOutlined /></button> */}
+                                <button className='btn btn-success' onClick={() => { handleShowTime(movie.maPhim) }}><CalendarOutlined /></button>
+
                             </td>
                         </tr>
                     )
@@ -105,6 +109,7 @@ export default function MovieList({ handleMenuItemClick, setSelectedMaPhim }) {
     const [form] = Form.useForm();
     const [movieInfo, setMovieInfo] = useState([]);
     const [isFixModalOpen, setIsFixModalOpen] = useState(false);
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
 
@@ -192,14 +197,26 @@ export default function MovieList({ handleMenuItemClick, setSelectedMaPhim }) {
     };
     const hiddenFixModal = () => { setIsFixModalOpen(false); };
     const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY', 'DD-MM-YYYY', 'DD-MM-YY'];
+
+
+    const showAddModal = async (maPhim) => {
+        try {
+            await fetchDataMovieInfo(maPhim);
+            setIsAddModalOpen(true);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    const hiddenAddModal = () => { setIsAddModalOpen(false); };
     return (
         <div>
             <div className='ModalFixMovie'>
-                <Modal title="Cập nhật Phim" open={isFixModalOpen} onOk={showFixModal} onCancel={hiddenFixModal}>
-                    <Form className='mx-auto my-5 border p-5 text-center'
+                <Modal title="Cập nhật Phim" open={isFixModalOpen} onOk={showFixModal}
+                    onCancel={hiddenFixModal} width={900} footer={null}
+                >
+                    <Form className='mx-auto my-5 border p-3 text-center'
                         {...formItemLayout} form={form}
                         name="FormFixMovie" onFinish={handleMovieFix}
-                        style={{ maxWidth: 1000, }}
                         scrollToFirstError
                     >
                         <Form.Item name="maPhim" label="Mã Phim">
@@ -247,16 +264,20 @@ export default function MovieList({ handleMenuItemClick, setSelectedMaPhim }) {
                         >
                             <DatePicker format={dateFormatList} />
                         </Form.Item>
-                        <Form.Item name="sapChieu" label="Sắp Chiếu">
-                            <Switch />
-                        </Form.Item>
-                        <Form.Item name="dangChieu" label="Đang Chiếu">
-                            <Switch />
-                        </Form.Item>
-                        <Form.Item name="hot" label="Hot">
-                            <Switch />
-                        </Form.Item>
+                        <div className="grid grid-cols-4">
+                            <div></div>
+                            <Form.Item name="sapChieu" label="Sắp Chiếu" className='flex-auto'>
+                                <Switch />
+                            </Form.Item>
+                            <Form.Item name="dangChieu" label="Đang Chiếu" className='flex-auto'>
+                                <Switch />
+                            </Form.Item>
+                            <Form.Item name="hot" label="Hot" className='flex-auto'>
+                                <Switch />
+                            </Form.Item>
+                        </div>
                         <Form.Item name="maNhom" label="Mã Nhóm"
+                            className='hidden'
                             rules={[
                                 {
                                     required: true,
@@ -266,7 +287,7 @@ export default function MovieList({ handleMenuItemClick, setSelectedMaPhim }) {
                             ]}>
                             <Input readOnly />
                         </Form.Item>
-                        <Form.Item name="danhGia" label="đánh Giá">
+                        <Form.Item name="danhGia" label="Đánh Giá">
                             <Input />
                         </Form.Item>
                         <Form.Item name="hinhAnh" label="Hình Ảnh">
@@ -279,22 +300,33 @@ export default function MovieList({ handleMenuItemClick, setSelectedMaPhim }) {
                                 />
                             )}
                         </Form.Item>
-                        <Button type="primary" htmlType="submit">
+                        <Button className='btn btn-red mb-1' htmlType="submit">
                             Cập nhật Phim
                         </Button>
                     </Form>
                 </Modal>
             </div>
-            <div className="row m-3">
-                <div className="col-10">
+            <div className='ModalAddMovie'>
+                <Modal title="Thêm Phim Mới" open={isAddModalOpen} onOk={showAddModal}
+                    onCancel={hiddenAddModal} width={900} footer={null}
+                >
+                    <AddMovie />
+                </Modal>
+            </div>
+            <div className="m-3">
+                <div className="text-right mb-2"><button className='btn btn-success' onClick={() => { showAddModal() }}>Thêm Phim Mới</button></div>
+                <div className="flex">
                     <Search
                         enterButton size="large" onSearch={fetchDataMovieSearch}
                         placeholder="input search text(phone number/name)"
+                        className='bg-blue-500 overflow-hidden rounded-lg'
+
                     />
+                    <button className={`btn btn-danger ${isSearch ? 'block' : 'hidden'}`}
+                        onClick={() => { handleSearchCancel() }}>CancleSearch</button>
                 </div>
-                <button className='btn btn-danger' onClick={() => { handleSearchCancel() }}>CancleSearch</button>
             </div>
             {renderList()}
-        </div>
+        </div >
     )
 }

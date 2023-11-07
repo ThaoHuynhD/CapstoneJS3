@@ -7,8 +7,8 @@ export default function MovieInfo({ maPhim }) {
     let [movieDetail, setMovieDetail] = useState([]);
     let fetchDataMovieDetail = async () => {
         try {
-            let response1 = await getMovieDetail(maPhim);
-            setMovieDetail(response1.data.content);
+            let response = await getMovieDetail(maPhim);
+            setMovieDetail(response.data.content);
         } catch {
             message.error('Đã có lỗi xảy ra');
         }

@@ -1,8 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
+  content: ["./src/**/*.{html,js}"],
+  mode: "jit",
   theme: {
     extend: {
       gridTemplateColumns: {
@@ -29,7 +28,7 @@ module.exports = {
         '400': '400px',
         '650': '650px',
         '750': '750px',
-      }
+      },
     },
   },
   plugins: [],

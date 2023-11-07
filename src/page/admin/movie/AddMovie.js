@@ -1,6 +1,6 @@
 import { Button, Form, Image, Input, Switch, message } from 'antd';
 import React, { useState } from 'react'
-import { getDataMovieAddNew } from '../../../../api/adminApi';
+import { getDataMovieAddNew } from '../../../api/adminApi';
 import TextArea from 'antd/es/input/TextArea';
 
 export default function AddMovie() {
@@ -168,7 +168,7 @@ export default function AddMovie() {
                         />
                     )}
                 </Form.Item>
-                <Button type="primary" htmlType="submit">
+                <Button className='btn btn-red' htmlType="submit">
                     Thêm Phim
                 </Button>
             </Form>

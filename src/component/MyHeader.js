@@ -14,10 +14,8 @@ export default function MyHeader() {
     const [current, setCurrent] = useState('/');
     const [showMobileMenu, setShowMobileMenu] = useState(false);
     const [isMobileWidth, setIsMobileWidth] = useState(mobile);
-    console.log("IsMobileWidth: ", isMobileWidth);
     const toggleMobileMenu = () => {
         setShowMobileMenu(!showMobileMenu);
-        console.log("ShowMobileMen: ", showMobileMenu);
     };
     useEffect(() => {
         const handleResize = () => {
@@ -117,13 +115,24 @@ export default function MyHeader() {
         }
     };
 
-    return (
-        <div style={{ backgroundColor: '#001529' }} className='fixed top-0 w-screen z-50 font-bold'>
-            <div className="container">
-                {(isAdmin) ? (
-                    <Menu id='myHeader' theme={'dark'} className='p-2 m-0 ' onClick={({ key }) => handleMenuItemClick(key)} mode="horizontal" items={menuAdminArr} />
-                ) : (
-                    (isMobileWidth) ? (
+    return <>
+        {(isAdmin) ? (
+            <Menu theme={'dark'}
+                className='p-2 gap-3 flex-auto'
+                onClick={({ key }) => handleMenuItemClick(key)}
+                mode="horizontal"
+            >
+                {menuAdminArr.map((item) => {
+                    return <Menu.Item key={item.key}
+                        className={`mr-20 ${item.flexRight ? 'ml-auto' : 'ml-0'}`}
+                    >{item.label}</Menu.Item>
+                })}
+            </Menu>
+        ) : (
+            <div style={{ backgroundColor: '#001529' }} className='fixed top-0 w-screen z-50 font-bold'>
+                <div className="container">
+                    {(isMobileWidth) ? (
+
                         <Menu
                             id='myHeader'
                             theme={'dark'}
@@ -138,33 +147,29 @@ export default function MyHeader() {
                                         key={item.key}
                                         className={`px-2 ${item.flexRight && showMobileMenu === false ? 'ml-auto' : 'ml-0'} 
                                         `}
-                                    >
-                                        {item.label}
+                                    >{item.label}
                                     </Menu.Item>
                                 );
                             })}
                         </Menu>
                     ) : (
                         <Menu
-                            id='myHeader'
-                            theme={'dark'}
+                            id='myHeader' theme={'dark'}
                             className='lg:p-2 py-2 m-0 text-center lg:text-left align-middle'
                             onClick={({ key }) => handleMenuItemClick(key)}
-                            selectedKeys={[current]}
-                            mode={'horizontal'}
+                            selectedKeys={[current]} mode={'horizontal'}
                         >
                             {menuUserArr.map((item) => (
                                 <Menu.Item
                                     key={item.key}
-                                    className={`px-2 ${item.flexRight ? 'ml-auto' : 'ml-0'}`}
-                                >
+                                    className={`px-2 ${item.flexRight ? 'ml-auto' : 'ml-0'}`}>
                                     {item.label}
                                 </Menu.Item>
                             ))}
                         </Menu>
-                    )
-                )}
+                    )}
+                </div>
             </div>
-        </div>
-    )
+        )}
+    </>
 };

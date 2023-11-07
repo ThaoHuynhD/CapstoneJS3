@@ -40,7 +40,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <div className={isAdmin ? 'pt-24' : ''}>
+        <div className={isAdmin ? '' : 'pt-24'}>
           <Routes>
             {selectedRoutes.map((route) => (
               <Route key={route.path} path={route.path} element={route.element} />

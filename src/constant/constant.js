@@ -8,3 +8,4 @@ export const SIGN_UP_USER = 'SIGN_UP_USER';
 export const GET_DETAIL_USER = 'GET_DETAIL_USER';
 export const UPDATE_USER = 'UPDATE_USER';
 export const SIGN_OUT_USER = 'SIGN_OUT_USER';
+
