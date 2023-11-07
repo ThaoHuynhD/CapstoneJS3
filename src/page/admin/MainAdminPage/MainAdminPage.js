@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { DesktopOutlined, ScheduleOutlined, PieChartOutlined, TeamOutlined, IdcardOutlined, CarryOutOutlined } from '@ant-design/icons';
+import { ScheduleOutlined, TeamOutlined, IdcardOutlined, CarryOutOutlined } from '@ant-design/icons';
 import { Breadcrumb, Layout, Menu, theme, } from 'antd';
 import MyHeader from '../../../component/MyHeader';
 import UserManagement from './user/UserManagement';
-import BookingManagement from './BookingManagement';
-import ReportManagement from './ReportManagement';
+
 import PersonalPage from '../../PersonalPage/PersonalPage';
 import AddMovie from './movie/AddMovie';
 import MovieList from './movie/MovieList';
@@ -22,13 +21,10 @@ const items = [
         getItem('Thêm Phim Mới', 'addMovie'),
         getItem('Danh Sách Phim', 'movieList'),
     ]),
-
     getItem('Quản Lý Lịch Chiếu Phim', 'showtime', <ScheduleOutlined />, [
         getItem('Thêm Lịch Chiếu Mới', 'showtimeAddNew'),
         getItem('Danh Sách Lịch Chiếu', 'showtimeList'),
     ]),
-    getItem('Booking', 'booking', <DesktopOutlined />),
-    getItem('Report', 'report', <PieChartOutlined />),
     getItem('Thông Tin Cá Nhân', 'personal', <IdcardOutlined />),
 ];
 
@@ -55,8 +51,6 @@ export default function MainAdminPage() {
         movieList: <MovieList handleMenuItemClick={handleMenuItemClick} setSelectedMaPhim={setSelectedMaPhim} />,
         showtimeAddNew: <ShowTimeAddNew maPhim={selectedMaPhim} />,
         showtimeList: <ShowTimeList1 maPhim={selectedMaPhim} />,
-        booking: <BookingManagement />,
-        report: <ReportManagement />,
         personal: <PersonalPage />,
     };
 
