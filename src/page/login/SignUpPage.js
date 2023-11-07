@@ -51,17 +51,16 @@ export default function SignUpPage() {
     return (
         <div id='sign-up' className='w-screen h-screen relative bg-black'>
             <div className='container border '>
-                <div className='text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
+                <div className='text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-5/6 lg:w-1/2'>
                     <Form
-                        // className='mx-auto my-5 border p-5 text-center'
-                        className='py-20 px-40 border bg-white rounded-2xl'
+                        className=' lg:p-20 p-5 border bg-white rounded-2xl'
                         theme={'dark'}
                         {...formItemLayout}
                         form={form}
                         name="register"
                         onFinish={onFinish}
                         style={{
-                            maxWidth: 600,
+                            maxWidth: 1200,
                         }}
                         scrollToFirstError
                     >

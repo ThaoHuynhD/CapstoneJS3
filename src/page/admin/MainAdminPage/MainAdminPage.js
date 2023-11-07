@@ -41,7 +41,6 @@ export default function MainAdminPage() {
 
     const componentMapping = {
         user: <UserManagement />,
-        // addMovie: <AddMovie />,
         movie: <MovieList setSelectedItem={setSelectedItem} setSelectedMaPhim={setSelectedMaPhim} />,
         showtime: <ShowTimeManagement selectedMaPhim={selectedMaPhim} />,
         personal: <PersonalPage />,
