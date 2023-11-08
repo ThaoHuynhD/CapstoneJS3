@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { message } from 'antd';
 import { getMovieShowTime } from '../../../api/mainApi';
 import SeatList from './SeatList';
 import BookingCart from './BookingCart';
+import { userLocalStorage } from '../../../api/localServices';
 
 export default function BookTicketPage() {
+  let info = userLocalStorage.get();
+  if (info === null) {
+    message.error("Vui Lòng Đăng Nhập Để Đặt Vé");
+    setTimeout(() => {
+      window.location.href = '/sign-in';
+    }, 1000);
+  }
+
   let params = useParams();
   let maLichChieu = params.maLichChieu.substring(1, params.maLichChieu.length);
   let cart = useSelector((state) => state.cartReducer.cart);
