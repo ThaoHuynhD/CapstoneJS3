@@ -13,7 +13,7 @@ export default function BookTicketPage() {
     message.error("Vui Lòng Đăng Nhập Để Đặt Vé");
     setTimeout(() => {
       window.location.href = '/sign-in';
-    }, 1000);
+    }, 500);
   }
 
   let params = useParams();

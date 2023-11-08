@@ -81,8 +81,9 @@ export default function PersonalDetail({ userDetail }) {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
+    const maskedPassword = '*'.repeat(userDetail.matKhau.length);
     return (
-        <div className='container'>
+        <div className='container pt-20'>
             <div className="text-center py-5"><span className='lg:px-5 px-2 py-2 text-3xl my-5 mx-auto font-semibold 
             bg-red-700 text-white text-center rounded-lg'>Thông tin cá nhân</span></div>
             <div className=' lg:w-1/2 mx-auto'>
@@ -94,7 +95,7 @@ export default function PersonalDetail({ userDetail }) {
                         </tr>
                         <tr>
                             <th>Mật Khẩu</th>
-                            <td>{userDetail.matKhau}</td>
+                            <td>{maskedPassword}</td>
                         </tr>
                         <tr>
                             <th>Số Điện Thoại</th>

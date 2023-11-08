@@ -83,7 +83,7 @@ export default function ShowTimeListByTheater() {
                             </div>
                         ),
                         children: (
-                            <div style={{ maxHeight: 750, overflow: 'scroll' }}>
+                            <div className='h-750 overflow-scroll'>
                                 {renderMovieList(theater)}
                             </div>
                         ),
@@ -103,7 +103,7 @@ export default function ShowTimeListByTheater() {
                 defaultActiveKey={1}
                 tabPosition={'left'}
                 items={renderTheaterList(theaterGroup)}
-                style={{ maxHeight: 750 }}
+                className='h-750'
             />,
         }
         theaterGroupListArr.push(theaterUpdate);
@@ -113,7 +113,7 @@ export default function ShowTimeListByTheater() {
         <div className='container pt-32 pb-5'>
             <div className='text-center'><span className='px-4 py-3 lg:text-3xl text-2xl my-2 mx-auto bg-red-700 font-semibold text-white text-center rounded-lg'
             >Rạp và Lịch Chiếu Phim</span></div>
-            <div className=' bg-slate-900'>
+            <div className='bg-slate-900'>
                 <ConfigProvider
                     theme={{
                         token: {
@@ -125,8 +125,7 @@ export default function ShowTimeListByTheater() {
                         defaultActiveKey={1}
                         tabPosition={'top'}
                         items={theaterGroupListArr}
-                        className={`mt-10 p-2 lg:mb-2 ${theaterGroupListArr.length !== 0 ? 'border' : ''}`}
-                        style={{ height: 750, overflow: 'hidden' }}
+                        className={`mt-10 p-2 lg:mb-2 h-750 overflow-hidden ${theaterGroupListArr.length !== 0 ? 'border' : ''}`}
                     />
                 </ConfigProvider>
             </div>
