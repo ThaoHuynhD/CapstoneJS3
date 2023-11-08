@@ -29,6 +29,9 @@ module.exports = {
         '650': '650px',
         '750': '750px',
       },
+      lineHeight: {
+        'extra-loose': '5',
+      }
     },
   },
   plugins: [],

@@ -132,7 +132,6 @@ export default function MyHeader() {
             <div style={{ backgroundColor: '#001529' }} className='fixed top-0 w-screen z-50 font-bold'>
                 <div className="container">
                     {(isMobileWidth) ? (
-
                         <Menu
                             id='myHeader'
                             theme={'dark'}
@@ -155,7 +154,7 @@ export default function MyHeader() {
                     ) : (
                         <Menu
                             id='myHeader' theme={'dark'}
-                            className='lg:p-2 py-2 m-0 text-center lg:text-left align-middle'
+                            className='lg:p-2 leading-extra-loose py-2 m-0 text-center lg:text-left align-middle'
                             onClick={({ key }) => handleMenuItemClick(key)}
                             selectedKeys={[current]} mode={'horizontal'}
                         >
