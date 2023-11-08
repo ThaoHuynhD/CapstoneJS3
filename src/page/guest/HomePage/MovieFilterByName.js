@@ -12,13 +12,15 @@ export default function MovieFilterByName() {
     const movieNameArr = [];
     const movieTheatherArr = [];
     const movieShowTimeArr = [];
-
     //gán giá trị cho các state
     const handleMovieSelection = (movieSelected) => {
         setMovieSelected(movieSelected);
+        setTheatherSelected(null);
+        setShowSelected(null);
     };
     const handleTheatherSelection = (theatherSelected) => {
         setTheatherSelected(theatherSelected);
+        setShowSelected(null);
     };
     const handleShowSelection = (showSelected) => {
         setShowSelected(showSelected);
@@ -36,6 +38,7 @@ export default function MovieFilterByName() {
     useEffect(() => { fetchDataTheatherList(); }, []);
 
     // Cập nhật các danh sách
+
     theatherGroupList.forEach(theatherGroup => {
         theatherGroup.lstCumRap
             .filter(theather => theather.maCumRap !== 'glx-nguyen-du\r\n')
@@ -44,7 +47,7 @@ export default function MovieFilterByName() {
                     // Thêm danh sách phim
                     const movieUpdate = {
                         value: movie.maPhim,
-                        label: `${movie.tenPhim} - ${movie.maPhim}`,
+                        label: `${movie.tenPhim}`,
                     }
                     if (!movieNameArr.some((existingMovie) => existingMovie.value === movieUpdate.value)) {
                         movieNameArr.push(movieUpdate);
@@ -65,6 +68,7 @@ export default function MovieFilterByName() {
                                     label: `${show.ngayChieuGioChieu.substring(0, 10)} - ${show.ngayChieuGioChieu.substring(14, 20)}`,
                                 }
                                 movieShowTimeArr.push(showUpdate);
+                                console.log("movieShowTimeArr: ", movieShowTimeArr);
                             }
                         })
                     }
@@ -87,23 +91,23 @@ export default function MovieFilterByName() {
                             onChange={handleMovieSelection}
                         />
                         <Select
-                            defaultValue="Chọn Rạp Phim"
                             className='w-full'
                             options={movieTheatherArr}
                             onChange={handleTheatherSelection}
-                            disabled={movieSelected === null ? true : false}
+                            disabled={movieSelected === null}
+                            value={{ label: theatherSelected === null ? "Chọn Rạp Phim" : theatherSelected.tenCumRap, value: theatherSelected }}
                         />
                         <Select
-                            defaultValue="Chọn Suất Chiếu"
                             className='w-full'
                             options={movieShowTimeArr}
                             onChange={handleShowSelection}
-                            disabled={theatherSelected === null ? true : false}
+                            disabled={theatherSelected === null}
+                            value={{ label: showSelected === null ? "Chọn Suất Chiếu" : showSelected.ngayChieuGioChieu, value: showSelected }}
                         />
                         <NavLink to={`/purchasing/:${showSelected}`}>
                             <button
                                 className='btn btn-red w-full'
-                                disabled={showSelected === null ? true : false}
+                                disabled={showSelected === null}
                             >Mua Vé</button>
                         </NavLink>
                     </div>

@@ -3,7 +3,6 @@ import { ScheduleOutlined, TeamOutlined, IdcardOutlined, CarryOutOutlined } from
 import { Breadcrumb, Layout, Menu, theme, } from 'antd';
 import MyHeader from '../../../component/MyHeader';
 import PersonalPage from '../../PersonalPage/PersonalPage';
-import AddMovie from '../movie/AddMovie';
 import MovieList from '../movie/MovieList';
 import UserManagement from '../user/UserManagement';
 import ShowTimeManagement from '../showtime/ShowTimeManagement';

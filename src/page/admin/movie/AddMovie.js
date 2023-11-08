@@ -76,7 +76,7 @@ export default function AddMovie() {
                 initialValues={{ sapChieu: false, dangChieu: false, hot: false }}
             >
                 <Form.Item name="tenPhim"
-                    label="tenPhim"
+                    label="Tên Phim"
                     initialValue={'Người đàn ông mang tên Ove'}
                     rules={[
                         {
@@ -89,7 +89,7 @@ export default function AddMovie() {
                     <Input />
                 </Form.Item>
                 <Form.Item name="trailer"
-                    label="trailer"
+                    label="Trailer"
                     initialValue={'https://www.phimconggiao.com/phim-nguoi-dan-ong-mang-ten-ove/'}
                     rules={[
                         {
@@ -101,7 +101,7 @@ export default function AddMovie() {
                     <Input />
                 </Form.Item>
                 <Form.Item name="moTa"
-                    label="moTa"
+                    label="Mô Tả"
                     initialValue={'Phim A Man Called Ove 2015 kể về một người đàn ông góa vợ 59 tuổi Ove Lindahl (Rolf Lassgård), Ông là bị trầm cảm sau cái chết của người vợ của mình. Vợ ông tên Sonja, một giáo viên, người chết vì ung thư sáu tháng trước. Sau khi làm việc tại các công ty trong 43 năm, ông được nghỉ hưu.'}
                     rules={[
                         {
@@ -114,7 +114,7 @@ export default function AddMovie() {
                     <TextArea rows={4} />
                 </Form.Item>
                 <Form.Item name="ngayKhoiChieu"
-                    label="ngayKhoiChieu"
+                    label="Ngày Khởi Chiếu"
                     initialValue={'26/10/2023'}
                     rules={[
                         {
@@ -126,21 +126,21 @@ export default function AddMovie() {
                     <Input placeholder='example: 10/10/2022' />
                 </Form.Item>
                 <Form.Item name="sapChieu"
-                    label="sapChieu"
+                    label="Sắp Chiếu"
                 >
                     <Switch defaultChecked={false} />
                 </Form.Item>
                 <Form.Item name="dangChieu"
-                    label="dangChieu">
+                    label="Đang Chiếu">
                     <Switch defaultChecked={false} />
                 </Form.Item>
                 <Form.Item name="hot"
-                    label="hot">
+                    label="Hot">
                     <Switch defaultChecked={false} />
                 </Form.Item>
                 <Form.Item name="maNhom"
-                    label="maNhom"
-                    initialValue={'GP01'}
+                    label="Mã Nhóm"
+                    initialValue={'GP09'}
                     rules={[
                         {
                             required: true,
@@ -148,9 +148,9 @@ export default function AddMovie() {
                             whitespace: true,
                         },
                     ]}>
-                    <Input placeholder={'GP01'} />
+                    <Input placeholder={'GP09'} />
                 </Form.Item>
-                <Form.Item name="hinhAnh" label="hinhAnh"
+                <Form.Item name="hinhAnh" label="Hình Ảnh"
                     rules={[
                         {
                             required: true,

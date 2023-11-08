@@ -24,7 +24,7 @@ function App() {
     { path: '/detail/:maPhim', element: <Layout><MovieDetailPage /></Layout> },
     { path: '/personal', element: <Layout><PersonalPage /></Layout> },
     { path: '/purchasing/:maLichChieu', element: <Layout><BookTicketPage /></Layout> },
-    { path: '/*', element: <Layout><NotFoundPage /></Layout> },
+    { path: '/*', element: <NotFoundPage /> },
   ];
 
   const adminRoutes = [
