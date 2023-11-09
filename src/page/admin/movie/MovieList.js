@@ -79,9 +79,7 @@ export default function MovieList({ setSelectedItem, setSelectedMaPhim }) {
                             <td>
                                 <button className='btn btn-warning' onClick={() => { showFixModal(movie.maPhim) }}><FormOutlined /></button>
                                 <button className='btn btn-danger mx-1 ' onClick={() => { handleMovieDel(movie.maPhim) }}><DeleteOutlined /></button>
-                                {/* <button className='btn btn-success' onClick={() => { handleShowTimeCreate(movie.maPhim) }}><CalendarOutlined /></button> */}
                                 <button className='btn btn-success' onClick={() => { handleShowTime(movie.maPhim) }}><CalendarOutlined /></button>
-
                             </td>
                         </tr>
                     )

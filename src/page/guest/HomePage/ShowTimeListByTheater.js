@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ConfigProvider, message } from 'antd';
-import { Tabs } from 'antd';
+import { ConfigProvider, Tabs, message } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { getShowTimeByTheaterGroup } from '../../../api/mainApi';
 
@@ -24,7 +23,7 @@ export default function ShowTimeListByTheater() {
             return (
                 <div key={index}>
                     <NavLink to={`/purchasing/:${show.maLichChieu}`}>
-                        <button className='btn btn-dark my-2 w-full'>
+                        <button className='btn btn-dark px-0 lg:px-3 my-2 w-full'>
                             <span className='text-white'>{show.ngayChieuGioChieu.substring(0, 10)}</span> -
                             <span className=' text-yellow-300'><b> {show.ngayChieuGioChieu.substring(14, 20)}</b></span>
                         </button>
@@ -49,7 +48,7 @@ export default function ShowTimeListByTheater() {
                             </NavLink>
                         </div>
                         <div className='flex-auto mx-auto pl-2'>
-                            <h5 className="p-2 m-0 text-warning font-bold">{movie.tenPhim.toUpperCase()}<span className='text-dark d-none'> ({movie.maPhim})</span></h5>
+                            <h5 className="p-2 m-0 text-warning text-center font-bold">{movie.tenPhim.toUpperCase()}<span className='text-dark d-none'> ({movie.maPhim})</span></h5>
                             <div className="grid lg:grid-cols-4 gap-2 grid-cols-1">{renderMovieShowTime(movie)}</div>
                         </div>
                     </div>
@@ -98,13 +97,15 @@ export default function ShowTimeListByTheater() {
     theaterGroupList.forEach(theaterGroup => {
         const theaterUpdate = {
             key: theaterGroup.maHeThongRap,
-            label: <img className={'lg:w-20 w-12 p-0'} src={theaterGroup.logo} alt='' />,
-            children: <Tabs
-                defaultActiveKey={1}
-                tabPosition={'left'}
-                items={renderTheaterList(theaterGroup)}
-                className='h-750'
-            />,
+            label: <img className={'lg:w-20 w-10 p-0'} src={theaterGroup.logo} alt='' />,
+            children:
+                <Tabs
+                    defaultActiveKey={1}
+                    tabPosition={'left'}
+                    items={renderTheaterList(theaterGroup)}
+                    className='h-750'
+                    destroyInactiveTabPane={true}
+                />,
         }
         theaterGroupListArr.push(theaterUpdate);
     })
@@ -118,7 +119,14 @@ export default function ShowTimeListByTheater() {
                     theme={{
                         token: {
                             colorPrimary: 'rgb(250 204 21 / var(--tw-text-opacity))',
+                            lineWidth: 2,
                         },
+                        components: {
+                            Tabs: {
+                                verticalItemPadding: 5,
+                                verticalItemMargin: '0 5px 0 0',
+                            },
+                        }
                     }}
                 >
                     <Tabs
@@ -128,6 +136,7 @@ export default function ShowTimeListByTheater() {
                         className={`mt-10 p-2 lg:mb-2 h-750 overflow-hidden ${theaterGroupListArr.length !== 0 ? 'border' : ''}`}
                     />
                 </ConfigProvider>
+
             </div>
         </div>
     )

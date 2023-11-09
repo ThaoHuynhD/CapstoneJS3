@@ -238,7 +238,7 @@ export default function UserManagement() {
             </Form.Item>
             <Form.Item name="maNhom"
               label="maNhom"
-              initialValue={'GP01'}
+              initialValue={'GP09'}
               className='hidden'
               rules={[
                 {
@@ -247,7 +247,7 @@ export default function UserManagement() {
                   whitespace: true,
                 },
               ]}>
-              <Input placeholder={'GP01'} />
+              <Input placeholder={'GP09'} />
             </Form.Item>
             <Form.Item name="maLoaiNguoiDung"
               label="maLoaiNguoiDung"
@@ -352,7 +352,7 @@ export default function UserManagement() {
                   whitespace: true,
                 },
               ]}>
-              <Input placeholder={'GP01'} disabled />
+              <Input placeholder={'GP09'} disabled />
             </Form.Item>
             <Form.Item name="maLoaiNguoiDung"
               label="maLoaiNguoiDung">
