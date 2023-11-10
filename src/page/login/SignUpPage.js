@@ -45,7 +45,6 @@ export default function SignUpPage() {
     };
 
     const onFinish = (values) => {
-        console.log('Received values of form: ', values);
         fetchData(values);
     };
     return (
@@ -66,7 +65,7 @@ export default function SignUpPage() {
                     >
                         <h1 className='pb-5 text-4xl'>Đăng ký</h1>
                         <Form.Item name="taiKhoan"
-                            label="taiKhoan"
+                            label="Tên Tài Khoản"
                             tooltip="Bạn muốn được gọi là?"
                             rules={[
                                 {
@@ -79,7 +78,7 @@ export default function SignUpPage() {
                             <Input />
                         </Form.Item>
                         <Form.Item name="matKhau"
-                            label="matKhau"
+                            label="Mật Khẩu"
                             rules={[
                                 {
                                     required: true,
@@ -91,7 +90,7 @@ export default function SignUpPage() {
                             <Input.Password />
                         </Form.Item>
                         <Form.Item name="soDienThoai"
-                            label="soDienThoai"
+                            label="Số Điện Thoại"
                             rules={[
                                 {
                                     required: true,
@@ -102,7 +101,7 @@ export default function SignUpPage() {
                             <Input />
                         </Form.Item>
                         <Form.Item name="maNhom"
-                            label="maNhom"
+                            label="Mã Nhóm"
                             className='d-none'
                             initialValue={'KhachHang'}
                             rules={[
@@ -115,7 +114,7 @@ export default function SignUpPage() {
                             <Input disabled={true} placeholder={'KhachHang'} />
                         </Form.Item>
                         <Form.Item name="hoTen"
-                            label="hoTen"
+                            label="Họ Và Tên"
                             rules={[
                                 {
                                     required: true,
@@ -126,7 +125,7 @@ export default function SignUpPage() {
                             <Input />
                         </Form.Item>
                         <Form.Item name="email"
-                            label="e-mail"
+                            label="Địa Chỉ Email"
                             rules={[
                                 {
                                     type: 'email',
@@ -140,7 +139,6 @@ export default function SignUpPage() {
                         >
                             <Input />
                         </Form.Item>
-
                         <Button className='btn-red' htmlType="submit">
                             Đăng Ký
                         </Button>
