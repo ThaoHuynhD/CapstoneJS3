@@ -28,6 +28,21 @@ export default function ShowTimeManagement({ selectedMaPhim }) {
     };
     dayjs.extend(customParseFormat);
 
+
+    const [myvalues, setMyvalues] = React.useState(
+        {
+            maHeThongRap: null,
+            maCumRap: null,
+            ngayChieu: null,
+            gioChieu: null,
+            giaVe: null,
+        }
+    );
+    const setFieldMaCumRap = () => {
+        setMyvalues({ maCumRap: null, });
+        if (theaterGroupSelected !== null) { form.setFieldsValue(myvalues); }
+    };
+
     const movieArr = [];
     const theaterGroupArr = [];
     const theaterArr = [];
@@ -41,6 +56,7 @@ export default function ShowTimeManagement({ selectedMaPhim }) {
     const handleTheaterGroupSelection = (theaterGroupSelected) => {
         setTheaterGroupSelected(theaterGroupSelected);
         setTheaterSelected(null);
+        setFieldMaCumRap();
     };
     const handleTheaterSelection = (theaterSelected) => {
         setTheaterSelected(theaterSelected);
@@ -157,7 +173,12 @@ export default function ShowTimeManagement({ selectedMaPhim }) {
         fetchDataMovieInfo(maPhim);
         setIsModalOpen(true);
     };
+
+
     const hiddenModal = () => { setIsModalOpen(false); };
+
+
+
     return (
         <div>
             <div className='grid grid-cols-2'>
@@ -186,26 +207,25 @@ export default function ShowTimeManagement({ selectedMaPhim }) {
                     name="register"
                     onFinish={handleAddShowTime}
                     style={{
-                        maxWidth: 800,
+                        maxWidth: 1200,
                     }}
                     scrollToFirstError
+                    initialValues={{
+                        maHeThongRap: theaterGroupSelected === null ? 'Chọn Hệ Thống Rạp' : '1',
+                        maCumRap: theaterSelected === null ? 'Chọn Cụm Rạp' : '2'
+                    }}
                 >
                     <Form.Item name="maHeThongRap" label="Mã Hệ Thống Rạp">
                         <Select
-                            defaultValue="Chọn Hệ Thống Rạp"
                             options={theaterGroupArr}
                             onChange={handleTheaterGroupSelection}
                         />
                     </Form.Item>
-                    <Form.Item name="maCumRap" label="Mã Cụm Rạp">
+                    <Form.Item name="maCumRap" label="Mã Cụm Rạp" shouldUpdate>
                         <Select
                             options={theaterArr}
                             onChange={handleTheaterSelection}
                             disabled={theaterGroupSelected === null}
-                            value={{
-                                label: theaterSelected === null ? 'Chọn Cụm Rạp' : theaterSelected,
-                                value: theaterSelected
-                            }}
                         />
                     </Form.Item>
                     <div className='flex flex-auto'>
