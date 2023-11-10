@@ -33,20 +33,22 @@ function App() {
     { path: '/sign-up', element: <SignUpPage /> },
     { path: '/personal', element: <PersonalPage /> },
     { path: '/*', element: <NotFoundPage /> },
-    { path: '/admin', element: <MainAdminPage /> }]
+    { path: '/admin', element: <MainAdminPage /> },
+    { path: '/purchasing/:maLichChieu', element: <Layout><BookTicketPage /></Layout> },
+  ]
 
   let selectedRoutes = userRoutes;
   if (isAdmin) { selectedRoutes = adminRoutes }
   return (
     <div className="App">
 
-        <BrowserRouter>
-          <Routes>
-            {selectedRoutes.map((route) => (
-              <Route key={route.path} path={route.path} element={route.element} />
-            ))}
-          </Routes>
-        </BrowserRouter>
+      <BrowserRouter>
+        <Routes>
+          {selectedRoutes.map((route) => (
+            <Route key={route.path} path={route.path} element={route.element} />
+          ))}
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
