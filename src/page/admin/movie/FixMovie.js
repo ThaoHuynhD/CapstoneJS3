@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { getDataMovieAddNew } from '../../../api/adminApi';
-import { Button, DatePicker, Form, Image, Input, Switch, message } from 'antd';
+import { getDataMovieUpdated } from '../../../api/adminApi';
+import { Form, Input, Switch, message, Button, Image, DatePicker } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 
-export default function AddMovie({ setIsAddModalOpen, form, dayjs }) {
+export default function FixMovie({ setIsFixModalOpen, form, setSelectedImage, selectedImage,dayjs }) {
     const [selectedFile, setSelectedFile] = useState(null);
-    const [selectedImage, setSelectedImage] = useState(null);
+
+    const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY', 'DD-MM-YYYY', 'DD-MM-YY'];
     const formItemLayout = {
         labelCol: {
             xs: { span: 24, },
@@ -16,7 +17,8 @@ export default function AddMovie({ setIsAddModalOpen, form, dayjs }) {
             sm: { span: 16, },
         },
     };
-    const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY', 'DD-MM-YYYY', 'DD-MM-YY'];
+
+
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         setSelectedFile(file);
@@ -29,51 +31,53 @@ export default function AddMovie({ setIsAddModalOpen, form, dayjs }) {
         }
     };
 
-    const handleMovieAdd = async (values) => {
+
+    const handleMovieFix = async (values) => {
+
+        console.log("values: ", values);
         const parsedDate = dayjs(values.ngayKhoiChieu, { timeZone: "GMT" });
         const formattedDate = parsedDate.format('DD/MM/YYYY');
 
-
-        const formAdd = new FormData();
-        formAdd.append("tenPhim", values.tenPhim);
-        formAdd.append("trailer", values.trailer);
-        formAdd.append("moTa", values.moTa);
-        formAdd.append("ngayKhoiChieu", formattedDate);
-        formAdd.append("sapChieu", values.sapChieu);
-        formAdd.append("dangChieu", values.dangChieu);
-        formAdd.append("hot", values.hot);
-        formAdd.append("maNhom", values.maNhom);
+        const formFix = new FormData();
+        formFix.append("maPhim", values.maPhim);
+        formFix.append("tenPhim", values.tenPhim);
+        formFix.append("trailer", values.trailer);
+        formFix.append("moTa", values.moTa);
+        formFix.append("ngayKhoiChieu", formattedDate);
+        formFix.append("sapChieu", values.sapChieu);
+        formFix.append("dangChieu", values.dangChieu);
+        formFix.append("hot", values.hot);
+        formFix.append("maNhom", values.maNhom);
+        formFix.append("danhGia", values.danhGia);
         if (selectedFile) {
-            formAdd.append("hinhAnh", selectedFile, selectedFile.name);
+            formFix.append("hinhAnh", selectedFile, selectedFile.name);
         }
         try {
-            for (const entry of formAdd.entries()) {
+            for (const entry of formFix.entries()) {
                 const [key, value] = entry;
                 console.log(`${key}: ${value}`);
             }
-            await getDataMovieAddNew(formAdd);
-            message.success("Thêm Phim thành công");
-            setIsAddModalOpen(false);
+            let response = await getDataMovieUpdated(formFix);
+            console.log("response: ", response);
+            message.success("Cập nhật thông tin phim thành công");
+            setIsFixModalOpen(false);
         } catch (error) {
-            message.error(error.response.data.content);
+            message.error('Đã có lỗi xảy ra!!!');
             console.log(error);
         }
     };
+
     return (
-        <div className='AddMovie'>
-            <Form className='mx-auto my-5 border p-5 text-center'
-                {...formItemLayout}
-                form={form}
-                name="FormAddMovie"
-                onFinish={handleMovieAdd}
-                style={{
-                    maxWidth: 1000,
-                }}
+        <div className='FixMovie'>
+            <Form className='mx-auto my-5 border p-3 text-center'
+                {...formItemLayout} form={form}
+                name="FormFixMovie" onFinish={handleMovieFix}
                 scrollToFirstError
-                initialValues={{ sapChieu: false, dangChieu: false, hot: false }}
             >
-                <Form.Item name="tenPhim"
-                    label="Tên Phim" hasFeedback
+                <Form.Item name="maPhim" label="Mã Phim" hasFeedback>
+                    <Input disabled />
+                </Form.Item>
+                <Form.Item name="tenPhim" label="Tên Phim" hasFeedback
                     rules={[
                         {
                             required: true,
@@ -84,8 +88,7 @@ export default function AddMovie({ setIsAddModalOpen, form, dayjs }) {
                 >
                     <Input />
                 </Form.Item>
-                <Form.Item name="trailer"
-                    label="Trailer" hasFeedback
+                <Form.Item name="trailer" label="Trailer" hasFeedback
                     rules={[
                         {
                             required: true,
@@ -95,8 +98,7 @@ export default function AddMovie({ setIsAddModalOpen, form, dayjs }) {
                     ]}>
                     <Input />
                 </Form.Item>
-                <Form.Item name="moTa"
-                    label="Mô Tả" hasFeedback
+                <Form.Item name="moTa" label="Mô Tả" hasFeedback
                     rules={[
                         {
                             required: true,
@@ -106,9 +108,7 @@ export default function AddMovie({ setIsAddModalOpen, form, dayjs }) {
                 >
                     <TextArea rows={4} />
                 </Form.Item>
-                <Form.Item name="ngayKhoiChieu"
-                    hasFeedback
-                    label="Ngày Khởi Chiếu"
+                <Form.Item name="ngayKhoiChieu" label="Ngày Khởi Chiếu" hasFeedback
                     rules={[
                         {
                             required: true,
@@ -116,27 +116,21 @@ export default function AddMovie({ setIsAddModalOpen, form, dayjs }) {
                         },
                     ]}
                 >
-                    {/* <Input placeholder='example: 10/10/2022' /> */}
                     <DatePicker format={dateFormatList} />
                 </Form.Item>
-                <div className="grid grid-cols-3 ml-40">
-                    <Form.Item name="sapChieu"
-                        label="Sắp Chiếu"
-                    >
-                        <Switch defaultChecked={false} />
+                <div className="grid grid-cols-4">
+                    <div></div>
+                    <Form.Item name="sapChieu" label="Sắp Chiếu" className='flex-auto'>
+                        <Switch />
                     </Form.Item>
-                    <Form.Item name="dangChieu"
-                        label="Đang Chiếu">
-                        <Switch defaultChecked={false} />
+                    <Form.Item name="dangChieu" label="Đang Chiếu" className='flex-auto'>
+                        <Switch />
                     </Form.Item>
-                    <Form.Item name="hot"
-                        label="Hot">
-                        <Switch defaultChecked={false} />
+                    <Form.Item name="hot" label="Hot" className='flex-auto'>
+                        <Switch />
                     </Form.Item>
                 </div>
-                <Form.Item name="maNhom"
-                    label="Mã Nhóm"
-                    initialValue={'GP09'}
+                <Form.Item name="maNhom" label="Mã Nhóm"
                     className='hidden'
                     rules={[
                         {
@@ -145,19 +139,13 @@ export default function AddMovie({ setIsAddModalOpen, form, dayjs }) {
                             whitespace: true,
                         },
                     ]}>
-                    <Input placeholder={'GP09'} />
+                    <Input readOnly />
                 </Form.Item>
-
-                <Form.Item name="hinhAnh" label="Hình Ảnh" hasFeedback
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Vui lòng chọn hình ảnh!',
-                            whitespace: true,
-                        },
-                    ]}>
-
-                    <Input type="file" accept="image/*" onChange={handleFileChange} />
+                <Form.Item name="danhGia" label="Đánh Giá" hasFeedback>
+                    <Input />
+                </Form.Item>
+                <Form.Item name="hinhAnh" label="Hình Ảnh" hasFeedback>
+                    <input type="file" accept="image/*" onChange={handleFileChange} />
                     {selectedImage && (
                         <Image
                             src={selectedImage}
@@ -166,8 +154,8 @@ export default function AddMovie({ setIsAddModalOpen, form, dayjs }) {
                         />
                     )}
                 </Form.Item>
-                <Button className='btn btn-red' htmlType="submit">
-                    Thêm Phim
+                <Button className='btn btn-red mb-1' htmlType="submit">
+                    Cập nhật Phim
                 </Button>
             </Form>
         </div>

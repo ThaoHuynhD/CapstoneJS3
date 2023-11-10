@@ -4,22 +4,22 @@ import { getShowTimeByTheaterGroup } from '../../../api/mainApi';
 import { NavLink } from 'react-router-dom';
 
 export default function MovieFilterByName() {
-    const [theatherGroupList, setTheatherGroupList] = useState([]);
-    const [theatherSelected, setTheatherSelected] = useState(null);
+    const [theaterGroupList, setTheaterGroupList] = useState([]);
+    const [theaterSelected, setTheaterSelected] = useState(null);
     const [movieSelected, setMovieSelected] = useState(null);
     const [showSelected, setShowSelected] = useState(null);
 
     const movieNameArr = [];
-    const movieTheatherArr = [];
+    const movieTheaterArr = [];
     const movieShowTimeArr = [];
     //gán giá trị cho các state
     const handleMovieSelection = (movieSelected) => {
         setMovieSelected(movieSelected);
-        setTheatherSelected(null);
+        setTheaterSelected(null);
         setShowSelected(null);
     };
-    const handleTheatherSelection = (theatherSelected) => {
-        setTheatherSelected(theatherSelected);
+    const handleTheaterSelection = (theaterSelected) => {
+        setTheaterSelected(theaterSelected);
         setShowSelected(null);
     };
     const handleShowSelection = (showSelected) => {
@@ -27,23 +27,23 @@ export default function MovieFilterByName() {
     };
 
     // lấy danh sách rạp bằng axios
-    let fetchDataTheatherList = async () => {
+    let fetchDataTheaterList = async () => {
         try {
             let response = await getShowTimeByTheaterGroup();
-            setTheatherGroupList(response.data.content);
+            setTheaterGroupList(response.data.content);
         } catch {
             message.error("Đã có lỗi xảy ra");
         }
     };
-    useEffect(() => { fetchDataTheatherList(); }, []);
+    useEffect(() => { fetchDataTheaterList(); }, []);
 
     // Cập nhật các danh sách
 
-    theatherGroupList.forEach(theatherGroup => {
-        theatherGroup.lstCumRap
-            .filter(theather => theather.maCumRap !== 'glx-nguyen-du\r\n')
-            .forEach(theather => {
-                theather.danhSachPhim.forEach((movie) => {
+    theaterGroupList.forEach(theaterGroup => {
+        theaterGroup.lstCumRap
+            .filter(theater => theater.maCumRap !== 'glx-nguyen-du\r\n')
+            .forEach(theater => {
+                theater.danhSachPhim.forEach((movie) => {
                     // Thêm danh sách phim
                     const movieUpdate = {
                         value: movie.maPhim,
@@ -54,21 +54,20 @@ export default function MovieFilterByName() {
                     }
                     // Thêm danh sách rạp chiếu
                     if (movie.maPhim === movieSelected) {
-                        const theatherUpdate = {
-                            value: theather.maCumRap,
-                            label: theather.tenCumRap,
+                        const theaterUpdate = {
+                            value: theater.maCumRap,
+                            label: theater.tenCumRap,
                         }
-                        movieTheatherArr.push(theatherUpdate);
+                        movieTheaterArr.push(theaterUpdate);
 
                         // Thêm danh sách lịch chiếu
                         movie.lstLichChieuTheoPhim.forEach(show => {
-                            if (theather.maCumRap === theatherSelected) {
+                            if (theater.maCumRap === theaterSelected) {
                                 const showUpdate = {
                                     value: show.maLichChieu,
                                     label: `${show.ngayChieuGioChieu.substring(0, 10)} - ${show.ngayChieuGioChieu.substring(14, 20)}`,
                                 }
                                 movieShowTimeArr.push(showUpdate);
-                                console.log("movieShowTimeArr: ", movieShowTimeArr);
                             }
                         })
                     }
@@ -92,16 +91,16 @@ export default function MovieFilterByName() {
                         />
                         <Select
                             className='w-full'
-                            options={movieTheatherArr}
-                            onChange={handleTheatherSelection}
+                            options={movieTheaterArr}
+                            onChange={handleTheaterSelection}
                             disabled={movieSelected === null}
-                            value={{ label: theatherSelected === null ? "Chọn Rạp Phim" : theatherSelected.tenCumRap, value: theatherSelected }}
+                            value={{ label: theaterSelected === null ? "Chọn Rạp Phim" : theaterSelected.tenCumRap, value: theaterSelected }}
                         />
                         <Select
                             className='w-full'
                             options={movieShowTimeArr}
                             onChange={handleShowSelection}
-                            disabled={theatherSelected === null}
+                            disabled={theaterSelected === null}
                             value={{ label: showSelected === null ? "Chọn Suất Chiếu" : showSelected.ngayChieuGioChieu, value: showSelected }}
                         />
                         <NavLink to={`/purchasing/:${showSelected}`}>

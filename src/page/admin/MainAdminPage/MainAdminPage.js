@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScheduleOutlined, TeamOutlined, IdcardOutlined, CarryOutOutlined } from '@ant-design/icons';
+import {  TeamOutlined, IdcardOutlined, CarryOutOutlined } from '@ant-design/icons';
 import { Breadcrumb, Layout, Menu, theme, } from 'antd';
 import MyHeader from '../../../component/MyHeader';
 import PersonalPage from '../../PersonalPage/PersonalPage';
@@ -15,22 +15,18 @@ function getItem(label, key, icon, children) {
 const items = [
     getItem('Quản Lý Người Dùng', 'user', <TeamOutlined />),
     getItem('Quản Lý Phim', 'movie', <CarryOutOutlined />,),
-    getItem('Quản Lý Lịch Chiếu Phim', 'showtime', <ScheduleOutlined />,),
     getItem('Thông Tin Cá Nhân', 'personal', <IdcardOutlined />),
 ];
 
 export default function MainAdminPage() {
     const [collapsed, setCollapsed] = useState(false);
     const { token: { colorBgContainer }, } = theme.useToken();
-    const [selectedItem, setSelectedItem] = useState('user');
-    console.log("selectedItem: ", selectedItem);
-    if (selectedItem === null) { setSelectedItem('user') }
+    const [selectedItem, setSelectedItem] = useState('movie');
 
     const [selectedMaPhim, setSelectedMaPhim] = useState(null);
 
     const handleMenuItemClick = (key) => {
         setSelectedItem(key);
-        console.log("SelectedItem: ", selectedItem);
     }
 
     const breadcrumbItems = [

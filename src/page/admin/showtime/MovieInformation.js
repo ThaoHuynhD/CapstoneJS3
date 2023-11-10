@@ -4,7 +4,7 @@ import { getMovieDetail } from '../../../api/mainApi';
 
 export default function MovieInformation({ maPhim }) {
     let [movieDetail, setMovieDetail] = useState([]);
-    let fetchDataMovieDetail = async () => {
+    let fetchDataMovieDetail = async (maPhim) => {
         try {
             let response = await getMovieDetail(maPhim);
             setMovieDetail(response.data.content);
@@ -14,8 +14,8 @@ export default function MovieInformation({ maPhim }) {
     };
 
     useEffect(() => {
-        fetchDataMovieDetail();
-    });
+        fetchDataMovieDetail(maPhim);
+    }, [maPhim]);
 
     return (
         <div className=' py-5 text-black'>

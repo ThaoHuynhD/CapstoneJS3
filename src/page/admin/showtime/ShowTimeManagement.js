@@ -1,29 +1,26 @@
-// import { Button, Select, message } from 'antd'
 import React, { useEffect, useState } from 'react'
-import MovieInformation from './MovieInformation'
-import { getMovieDetail, getMovieList, getTheaterByTheaterGroup, getTheaterGroup } from '../../../api/mainApi';
-import ShowTimeListByMovie from '../../guest/MovieDetailPage/ShowTimeListByMovie';
-
-
-// import React, { useEffect, useState } from 'react';
 import { Button, Form, Input, Select, message, DatePicker, TimePicker, Modal } from 'antd';
-// import { getMovieList, getTheaterByTheaterGroup, getTheaterGroup } from '../../../api/mainApi';
+import { getMovieDetail, getMovieList, getTheaterByTheaterGroup, getTheaterGroup } from '../../../api/mainApi';
 import { getShowTimeCreate } from '../../../api/adminApi';
-import dayjs from 'dayjs';
+import ShowTimeListByMovie from '../../guest/MovieDetailPage/ShowTimeListByMovie';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import dayjs from 'dayjs';
 import moment from 'moment';
+import MovieInformation from './MovieInformation'
 
 
 
 export default function ShowTimeManagement({ selectedMaPhim }) {
-    console.log("selectedMaPhim: ", selectedMaPhim);
     const [movieList, setMovieList] = useState([]);
     const [movieSelected, setMovieSelected] = useState(selectedMaPhim !== null ? selectedMaPhim : '13189');
     const [theaterGroupList, setTheaterGroupList] = useState([]);
-    const [theaterGroupSelected, setTheaterGroupSelected] = useState(null);
     const [theaterList, setTheaterList] = useState([]);
+
+    const [theaterGroupSelected, setTheaterGroupSelected] = useState(null);
     const [theaterSelected, setTheaterSelected] = useState(null);
+
     const [isModalOpen, setIsModalOpen] = useState(false);
+
     const [form] = Form.useForm();
     const formItemLayout = {
         labelCol: { xs: { span: 24, }, sm: { span: 8, }, },
@@ -34,12 +31,27 @@ export default function ShowTimeManagement({ selectedMaPhim }) {
     const movieArr = [];
     const theaterGroupArr = [];
     const theaterArr = [];
+
+    //gán giá trị cho các state
+    const handleMovieSelection = (movieSelected) => {
+        setMovieSelected(movieSelected);
+        setTheaterGroupSelected(null);
+        setTheaterSelected(null);
+    };
+    const handleTheaterGroupSelection = (theaterGroupSelected) => {
+        setTheaterGroupSelected(theaterGroupSelected);
+        setTheaterSelected(null);
+    };
+    const handleTheaterSelection = (theaterSelected) => {
+        setTheaterSelected(theaterSelected);
+    };
+
     let fetchDataMovieList = async () => {
         try {
             let response = await getMovieList();
             setMovieList(response.data.content);
         } catch {
-            message.error("Đã có lỗi xảy ra fetchDataMovieList");
+            message.error("Đã có lỗi xảy ra");
         }
     };
 
@@ -48,30 +60,29 @@ export default function ShowTimeManagement({ selectedMaPhim }) {
             let response = await getTheaterGroup();
             setTheaterGroupList(response.data.content);
         } catch {
-            message.error("Đã có lỗi xảy ra fetchDataTheaterGroupList");
+            message.error("Đã có lỗi xảy ra");
         }
     };
 
-    let fetchDataTheaterList = async () => {
-        if (theaterGroupSelected !== undefined) return;
+    let fetchDataTheaterList = async (theaterGroupSelected) => {
+        if (theaterGroupSelected === null) return;
         try {
             let response = await getTheaterByTheaterGroup(theaterGroupSelected);
             setTheaterList(response.data.content);
         } catch {
-            message.error("Đã có lỗi xảy ra fetchDataTheaterList");
+            message.error("Đã có lỗi xảy ra");
         }
     };
+    useEffect(() => {
+        fetchDataMovieList();
+        fetchDataTheaterGroupList();
+    }, []);
+    useEffect(() => {
+        fetchDataTheaterList(theaterGroupSelected)
+    }, [theaterGroupSelected]);
 
-    //gán giá trị cho các state
-    const handleMovieSelection = (movieSelected) => {
-        setMovieSelected(movieSelected);
-    };
-    const handleTheaterGroupSelection = (theaterSelected) => {
-        setTheaterGroupSelected(theaterSelected);
-    };
-    const handleTheaterSelection = (theaterSelected) => {
-        setTheaterSelected(theaterSelected);
-    };
+    // Cập nhật các danh sách
+
     movieList.forEach((movie) => {
         const movieUpdate = {
             value: movie.maPhim,
@@ -86,26 +97,20 @@ export default function ShowTimeManagement({ selectedMaPhim }) {
             label: theaterGroup.tenHeThongRap,
         }
         theaterGroupArr.push(TheaterGroupUpdate);
+
+        theaterList.forEach((theater) => {
+            if (theaterGroup.maHeThongRap === theaterGroupSelected) {
+                const theaterUpdate = {
+                    value: theater.maCumRap,
+                    label: theater.tenCumRap,
+                }
+                theaterArr.push(theaterUpdate);
+            }
+        })
     })
 
-    theaterList.forEach((theater) => {
-        const theaterUpdate = {
-            value: theater.maCumRap,
-            label: theater.tenCumRap,
-        }
-        theaterArr.push(theaterUpdate);
-    })
-    useEffect(() => {
-        fetchDataMovieList();
-    }, []);
-    useEffect(() => {
-        fetchDataTheaterGroupList();
-    }, [movieSelected]);
-    useEffect(() => {
-        fetchDataTheaterList()
-    }, [theaterGroupSelected]);
 
-    const fetchData = async (values) => {
+    const handleAddShowTime = async (values) => {
         let ngayChieuGioChieu = moment(values.ngayChieu).format('DD-MM-YYYY') + ' ' + moment(values.gioChieu).format('HH:mm:ss')
         let showTimeUpdate = {
             maPhim: movieSelected,
@@ -114,19 +119,14 @@ export default function ShowTimeManagement({ selectedMaPhim }) {
             giaVe: values.giaVe,
         }
         try {
-            console.log("showTimeUpdate: ", showTimeUpdate);
             await getShowTimeCreate(showTimeUpdate);
             message.success("Tạo Lịch Chiếu thành công");
+            hiddenModal();
         } catch (error) {
-            message.error("Đã có lỗi xảy ra fetchData");
+            message.error("Đã có lỗi xảy ra");
             console.log(error);
         }
     };
-
-    const handleAddShowTime = (values) => {
-        fetchData(values);
-        hiddenModal();
-    }
 
     const fetchDataMovieInfo = async (maPhim) => {
         try {
@@ -149,7 +149,7 @@ export default function ShowTimeManagement({ selectedMaPhim }) {
             }
             form.setFieldsValue(updatedMovie);
         } catch (error) {
-            message.error("Đã có lỗi xảy ra fetchDataMovieInfo");
+            message.error("Đã có lỗi xảy ra");
             console.log(error.response.data);
         }
     };
@@ -174,7 +174,7 @@ export default function ShowTimeManagement({ selectedMaPhim }) {
                 </div>
                 <div>
                     <ShowTimeListByMovie maPhim={movieSelected} />
-                    <div className="text-center"><Button className='btn btn-red' onClick={() => { showModal() }}>Tạo Lịch Chiếu Mới</Button></div>
+                    <div className="text-center"><Button className='btn btn-red' onClick={() => { showModal(movieSelected) }}>Tạo Lịch Chiếu Mới</Button></div>
                 </div>
             </div>
             <Modal title="Tạo Lịch Chiếu Mới" open={isModalOpen} onOk={showModal}
@@ -199,10 +199,13 @@ export default function ShowTimeManagement({ selectedMaPhim }) {
                     </Form.Item>
                     <Form.Item name="maCumRap" label="Mã Cụm Rạp">
                         <Select
-                            defaultValue="Chọn Cụm Rạp"
                             options={theaterArr}
                             onChange={handleTheaterSelection}
-                            disabled={theaterGroupSelected === null ? true : false}
+                            disabled={theaterGroupSelected === null}
+                            value={{
+                                label: theaterSelected === null ? 'Chọn Cụm Rạp' : theaterSelected,
+                                value: theaterSelected
+                            }}
                         />
                     </Form.Item>
                     <div className='flex flex-auto'>

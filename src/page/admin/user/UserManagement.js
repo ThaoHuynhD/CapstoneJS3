@@ -6,6 +6,7 @@ import {
 import { Form, Input, Select, Tag, message } from 'antd';
 import { Button, Modal } from 'antd';
 import Search from 'antd/es/input/Search';
+import { DeleteOutlined, FormOutlined } from '@ant-design/icons';
 
 export default function UserManagement() {
   const formItemLayout = {
@@ -93,6 +94,7 @@ export default function UserManagement() {
     try {
       await getDataUserAddNew(values);
       message.success("Thêm người dùng thành công");
+      handleAddCancel();
     } catch (error) {
       message.error(error.response.data.content);
       console.log(error);
@@ -102,6 +104,7 @@ export default function UserManagement() {
     try {
       await getDataUserInfoUpdated(values);
       message.success("Cập nhật thông tin người dùng thành công");
+      handleFixCancel();
     } catch (error) {
       message.error(error.response.data.content);
       console.log(error);
@@ -143,8 +146,8 @@ export default function UserManagement() {
               <td>{user.soDT}</td>
               <td>{user.email}</td>
               <td>
-                <button className='mr-1 btn btn-warning' onClick={() => { showFixModal(user.taiKhoan) }}>Fix</button>
-                <button className='btn btn-danger' onClick={() => { handleUserDel(user.taiKhoan) }}>Del</button>
+                <button className='mr-1 btn btn-warning' onClick={() => { showFixModal(user.taiKhoan) }}><FormOutlined /></button>
+                <button className='btn btn-danger' onClick={() => { handleUserDel(user.taiKhoan) }}><DeleteOutlined /></button>
               </td>
             </tr>
           )
@@ -225,7 +228,7 @@ export default function UserManagement() {
             >
               <Input />
             </Form.Item>
-            <Form.Item name="soDienThoai"
+            <Form.Item name="soDt"
               label="Số Điện Thoại"
               rules={[
                 {
@@ -251,8 +254,7 @@ export default function UserManagement() {
             </Form.Item>
             <Form.Item name="maLoaiNguoiDung"
               label="maLoaiNguoiDung"
-              initialValue={'KhachHang'}
-              className='hidden'
+              // className='hidden'
               rules={[
                 {
                   required: true,
@@ -260,7 +262,12 @@ export default function UserManagement() {
                   whitespace: true,
                 },
               ]}>
-              <Input placeholder={'KhachHang'} />
+              <Select
+                defaultValue="KhachHang"
+                style={{ width: 120 }}
+                allowClear
+                options={[{ value: 'KhachHang', label: 'Khách Hàng' }, { value: 'QuanTri', label: 'Quản Trị' }]}
+              />
             </Form.Item>
             <Button className='btn btn-red pb-1' htmlType="submit">
               Thêm người dùng
@@ -272,7 +279,7 @@ export default function UserManagement() {
         <Modal width={800} title="Cập Nhật Tài Khoản" open={isFixModalOpen} onCancel={handleFixCancel}
           footer={null}
         >
-          <Form name="FormFixUser" onFinish={handleUserFix}
+          <Form name="Cập Nhật Thông Tin Người Dùng" onFinish={handleUserFix}
             className='mx-auto my-5 border p-5 text-center'
             {...formItemLayout} form={form} scrollToFirstError
             style={{
@@ -281,7 +288,7 @@ export default function UserManagement() {
             initialValues={userInfo}
           >
             <Form.Item name="taiKhoan"
-              label="taiKhoan"
+              label="Tên Tài Khoản"
               tooltip="Bạn muốn được gọi là?"
               rules={[
                 {
@@ -294,7 +301,7 @@ export default function UserManagement() {
               <Input disabled />
             </Form.Item>
             <Form.Item name="hoTen"
-              label="hoTen"
+              label="Họ Và Tên"
               rules={[
                 {
                   required: true,
@@ -305,7 +312,7 @@ export default function UserManagement() {
               <Input />
             </Form.Item>
             <Form.Item name="matKhau"
-              label="matKhau"
+              label="Mật Khẩu"
               rules={[
                 {
                   required: true,
@@ -317,7 +324,7 @@ export default function UserManagement() {
               <Input.Password />
             </Form.Item>
             <Form.Item name="email"
-              label="e-mail"
+              label="Địa Chỉ Email"
               rules={[
                 {
                   type: 'email',
@@ -332,7 +339,7 @@ export default function UserManagement() {
               <Input />
             </Form.Item>
             <Form.Item name="soDt"
-              label="soDt"
+              label="Số Điện Thoại"
               rules={[
                 {
                   required: true,
@@ -343,8 +350,8 @@ export default function UserManagement() {
               <Input />
             </Form.Item>
             <Form.Item name="maNhom"
-              label="maNhom"
-              className='d-none'
+              label="Mã Nhóm"
+              className='hidden'
               rules={[
                 {
                   required: true,
@@ -355,7 +362,7 @@ export default function UserManagement() {
               <Input placeholder={'GP09'} disabled />
             </Form.Item>
             <Form.Item name="maLoaiNguoiDung"
-              label="maLoaiNguoiDung">
+              label="Mã Loại Người Dùng">
               <Select
                 initialvalues='KhachHang'
                 style={{ width: 332 }}

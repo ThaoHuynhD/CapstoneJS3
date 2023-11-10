@@ -10,7 +10,6 @@ import BookTicketPage from './page/guest/BookTicketPage/BookTicketPage';
 import { userLocalStorage } from './api/localServices';
 import MainAdminPage from './page/admin/MainAdminPage/MainAdminPage';
 import Layout from './template/Layout';
-import { ConfigProvider } from 'antd';
 
 function App() {
   let info = userLocalStorage.get();
@@ -40,18 +39,7 @@ function App() {
   if (isAdmin) { selectedRoutes = adminRoutes }
   return (
     <div className="App">
-      <ConfigProvider
-        theme={{
-          token: {
-            colorPrimary: 'rgb(250 204 21 / var(--tw-text-opacity))',
-          },
-          components: {
-            Tabs: {
-              verticalItemPadding: 5,
-            },
-          }
-        }}
-      >
+
         <BrowserRouter>
           <Routes>
             {selectedRoutes.map((route) => (
@@ -59,7 +47,6 @@ function App() {
             ))}
           </Routes>
         </BrowserRouter>
-      </ConfigProvider>
     </div>
   );
 }

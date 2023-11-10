@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 
 export default function ShowTimeListByMovie({ maPhim }) {
     let [theaterGroupList, setTheaterGroupList] = useState([]);
-    let fetchDataMovieDetail = async () => {
+    let fetchDataMovieDetail = async (maPhim) => {
         try {
             let response = await getShowTimeByMovie(maPhim);
             setTheaterGroupList(response.data.content);
@@ -15,7 +15,7 @@ export default function ShowTimeListByMovie({ maPhim }) {
     };
 
     useEffect(() => {
-        fetchDataMovieDetail();
+        fetchDataMovieDetail(maPhim);
     }, [maPhim]);
 
     const renderShowTimeList = (theater) => {
