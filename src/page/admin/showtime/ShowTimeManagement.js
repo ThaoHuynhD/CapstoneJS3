@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Form, Select, message, Modal } from 'antd';
-import { getMovieDetail, getMovieList } from '../../../api/mainApi';
+import { getMovieDetail, getMovieList } from '../../../api/api';
 import ShowTimeListByMovie from '../../guest/MovieDetailPage/ShowTimeListByMovie';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import dayjs from 'dayjs';

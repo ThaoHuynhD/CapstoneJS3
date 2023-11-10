@@ -1,6 +1,6 @@
 import { Modal, Rate, message } from 'antd';
 import React, { useEffect, useState } from 'react'
-import { getMovieDetail } from '../../../api/mainApi';
+import { getMovieDetail } from '../../../api/api';
 import { PlayCircleOutlined } from '@ant-design/icons';
 
 export default function MovieInfo({ maPhim }) {

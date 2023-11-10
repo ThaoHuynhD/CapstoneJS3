@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Form, Input, Modal, message } from 'antd';
 import { userDetailLocalStorage } from '../../api/localServices';
 import { UPDATE_USER } from '../../constant/constant';
-import { getUserInfoUpdated } from '../../api/mainApi';
+import { getUserInfoUpdated } from '../../api/api';
 import { useDispatch } from 'react-redux';
 
 export default function PersonalDetail({ userDetail }) {

@@ -3,7 +3,7 @@ import { Button, Form, Input, message, } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { SIGN_UP_USER } from '../../constant/constant';
-import { getUserSignUp } from '../../api/mainApi';
+import { getUserSignUp } from '../../api/api';
 export default function SignUpPage() {
     const dispatch = useDispatch();
     const formItemLayout = {

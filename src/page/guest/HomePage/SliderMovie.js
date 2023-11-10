@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Carousel, message } from 'antd';
-import { getMovieBanner } from '../../../api/mainApi.js';
+import { getMovieBanner } from '../../../api/api.js';
 
 export default function SliderMovie() {
     const [banner, setBanner] = useState([]);

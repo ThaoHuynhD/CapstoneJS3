@@ -1,5 +1,5 @@
 import React from 'react'
-import { getDataUserInfoUpdated } from '../../../api/adminApi';
+import { getDataUserInfoUpdated } from '../../../api/api';
 import { Form, Input, Select, message, Button } from 'antd';
 
 export default function FixUser({ form, setIsFixModalOpen }) {

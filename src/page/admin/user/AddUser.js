@@ -1,5 +1,5 @@
 import React from 'react'
-import { getDataUserAddNew, } from '../../../api/adminApi';
+import { getDataUserAddNew, } from '../../../api/api';
 import { Button, Form, Input, Select, message } from 'antd';
 
 export default function AddUser({ form, setIsAddModalOpen }) {

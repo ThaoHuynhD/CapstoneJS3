@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getUserInfo } from '../../api/mainApi';
+import { getUserInfo } from '../../api/api';
 import { userDetailLocalStorage, userLocalStorage } from '../../api/localServices';
 import PersonalDetail from './PersonalDetail';
 import BookingHistory from './BookingHistory';

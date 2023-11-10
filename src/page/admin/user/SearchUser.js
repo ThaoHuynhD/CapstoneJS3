@@ -1,5 +1,5 @@
 import React from 'react'
-import { getDataUserSearch } from '../../../api/adminApi';
+import { getDataUserSearch } from '../../../api/api';
 import { message } from 'antd';
 import Search from 'antd/es/input/Search';
 

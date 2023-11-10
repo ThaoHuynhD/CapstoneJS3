@@ -1,6 +1,6 @@
 import { ConfigProvider, Tabs, message } from 'antd';
 import React, { useEffect, useState } from 'react'
-import { getShowTimeByMovie } from '../../../api/mainApi';
+import { getShowTimeByMovie } from '../../../api/api';
 import { NavLink } from 'react-router-dom';
 
 export default function ShowTimeListByMovie({ maPhim }) {

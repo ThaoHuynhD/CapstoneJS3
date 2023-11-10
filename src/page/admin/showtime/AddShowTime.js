@@ -1,8 +1,8 @@
 import { Button, DatePicker, Form, Input, Select, TimePicker, message } from 'antd'
 import moment from 'moment';
 import React, { useEffect, useState } from 'react'
-import { getShowTimeCreate } from '../../../api/adminApi';
-import { getTheaterByTheaterGroup, getTheaterGroup } from '../../../api/mainApi';
+import { getShowTimeCreate } from '../../../api/api';
+import { getTheaterByTheaterGroup, getTheaterGroup } from '../../../api/api';
 
 export default function AddShowTime({ form, setIsModalOpen, movieSelected }) {
     const [theaterGroupList, setTheaterGroupList] = useState([]);

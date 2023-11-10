@@ -1,5 +1,5 @@
 import React from 'react'
-import { getTicketBooked } from '../../../api/mainApi';
+import { getTicketBooked } from '../../../api/api';
 import { PUCHASING_CART } from '../../../constant/constant';
 import { Image, message } from 'antd';
 import { useDispatch } from 'react-redux';

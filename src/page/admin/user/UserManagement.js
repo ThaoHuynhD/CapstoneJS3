@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {
   getDataUser, getDataUserDelete, getDataUserList
-} from '../../../api/adminApi';
+} from '../../../api/api';
 import { Form, Tag, message, Modal } from 'antd';
 import { DeleteOutlined, FormOutlined } from '@ant-design/icons';
 import AddUser from './AddUser';

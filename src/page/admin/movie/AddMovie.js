@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { getDataMovieAddNew } from '../../../api/adminApi';
+import { getDataMovieAddNew } from '../../../api/api';
 import { Button, DatePicker, Form, Image, Input, Switch, message } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 

@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import React, { useEffect, useState } from 'react'
-import { getMovieDetail } from '../../../api/mainApi';
+import { getMovieDetail } from '../../../api/api';
 
 export default function MovieInformation({ maPhim }) {
     let [movieDetail, setMovieDetail] = useState([]);

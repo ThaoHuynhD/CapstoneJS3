@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { getMovieDetail, getMovieList, getMovieListSearchByName } from '../../../api/mainApi';
-import { getDataMovieDeleteIfNoShowTime, } from '../../../api/adminApi';
+import { getMovieDetail, getMovieList, getMovieListSearchByName } from '../../../api/api';
+import { getDataMovieDeleteIfNoShowTime, } from '../../../api/api';
 import { message, Image, Modal, Form, } from 'antd';
 import { FormOutlined, DeleteOutlined, CalendarOutlined } from '@ant-design/icons';
 import Search from 'antd/es/input/Search';

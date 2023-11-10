@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { ConfigProvider, Tabs, message } from 'antd';
 import { NavLink } from 'react-router-dom';
-import { getShowTimeByTheaterGroup } from '../../../api/mainApi';
+import { getShowTimeByTheaterGroup } from '../../../api/api';
 
 export default function ShowTimeListByTheater() {
 

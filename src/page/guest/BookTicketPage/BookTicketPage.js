@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { message } from 'antd';
-import { getMovieShowTime } from '../../../api/mainApi';
+import { getMovieShowTime } from '../../../api/api';
 import SeatList from './SeatList';
 import BookingCart from './BookingCart';
 import { userLocalStorage } from '../../../api/localServices';
