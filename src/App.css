@@ -24,3 +24,8 @@
 :where(.css-dev-only-do-not-override-abcijp).ant-tabs-left >.ant-tabs-content-holder >.ant-tabs-content>.ant-tabs-tabpane, :where(.css-dev-only-do-not-override-abcijp).ant-tabs-left >div>.ant-tabs-content-holder >.ant-tabs-content>.ant-tabs-tabpane{
   padding-left: 0;
 }
+:where(.css-dev-only-do-not-override-xu9wm8).ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
+  color: gold;
+  border-color: gold;
+  background-color: rgb(108, 29, 29);
+}

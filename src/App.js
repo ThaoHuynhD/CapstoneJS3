@@ -1,15 +1,15 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-import SignInPage from './page/login/SignInPage';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { userLocalStorage } from './api/localServices';
+import BookTicketPage from './page/guest/BookTicketPage/BookTicketPage';
 import HomePage from './page/guest/HomePage/HomePage';
-import NotFoundPage from './page/NotFoundPage';
+import Layout from './template/Layout';
+import SignInPage from './page/login/SignInPage';
 import SignUpPage from './page/login/SignUpPage';
+import NotFoundPage from './page/NotFoundPage';
+import MainAdminPage from './page/admin/MainAdminPage/MainAdminPage';
 import MovieDetailPage from './page/guest/MovieDetailPage/MovieDetailPage';
 import PersonalPage from './page/PersonalPage/PersonalPage';
-import BookTicketPage from './page/guest/BookTicketPage/BookTicketPage';
-import { userLocalStorage } from './api/localServices';
-import MainAdminPage from './page/admin/MainAdminPage/MainAdminPage';
-import Layout from './template/Layout';
 
 function App() {
   let info = userLocalStorage.get();
