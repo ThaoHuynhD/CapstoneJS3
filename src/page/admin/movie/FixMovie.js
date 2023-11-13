@@ -3,7 +3,7 @@ import { getDataMovieUpdated } from '../../../api/api';
 import { Form, Input, Switch, message, Button, Image, DatePicker } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 
-export default function FixMovie({ setIsFixModalOpen, form, setSelectedImage, selectedImage,dayjs }) {
+export default function FixMovie({ setIsFixModalOpen, form, setSelectedImage, selectedImage, dayjs }) {
     const [selectedFile, setSelectedFile] = useState(null);
 
     const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY', 'DD-MM-YYYY', 'DD-MM-YY'];
@@ -34,7 +34,6 @@ export default function FixMovie({ setIsFixModalOpen, form, setSelectedImage, se
 
     const handleMovieFix = async (values) => {
 
-        console.log("values: ", values);
         const parsedDate = dayjs(values.ngayKhoiChieu, { timeZone: "GMT" });
         const formattedDate = parsedDate.format('DD/MM/YYYY');
 
@@ -57,8 +56,7 @@ export default function FixMovie({ setIsFixModalOpen, form, setSelectedImage, se
                 const [key, value] = entry;
                 console.log(`${key}: ${value}`);
             }
-            let response = await getDataMovieUpdated(formFix);
-            console.log("response: ", response);
+            await getDataMovieUpdated(formFix);
             message.success("Cập nhật thông tin phim thành công");
             setIsFixModalOpen(false);
         } catch (error) {

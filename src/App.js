@@ -41,7 +41,6 @@ function App() {
   if (isAdmin) { selectedRoutes = adminRoutes }
   return (
     <div className="App">
-
       <BrowserRouter>
         <Routes>
           {selectedRoutes.map((route) => (

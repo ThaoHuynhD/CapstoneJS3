@@ -41,7 +41,6 @@ export default function MovieList({ setSelectedItem, setSelectedMaPhim }) {
     const handleSearchCancel = () => { setIsSearch(false); };
 
     const handleMovieDel = async (maPhim) => {
-        console.log("maPhim: ", maPhim);
         try {
             await getDataMovieDeleteIfNoShowTime(maPhim);
             message.success("Xóa phim thành công");
@@ -98,12 +97,8 @@ export default function MovieList({ setSelectedItem, setSelectedMaPhim }) {
         fetchDataMovieSearch();
     }, []);
 
-    const [movieInfo, setMovieInfo] = useState([]);
     const [form] = Form.useForm();
     const [selectedImage, setSelectedImage] = useState(null);
-    useEffect(() => {
-        setSelectedImage(movieInfo.hinhAnh);
-    }, [movieInfo]);
 
     const fetchDataMovieInfo = async (maPhim) => {
         try {
@@ -124,7 +119,7 @@ export default function MovieList({ setSelectedItem, setSelectedMaPhim }) {
                 maNhom: movie.maNhom,
                 ngayKhoiChieu: formattedDate,
             }
-            setMovieInfo(updatedMovie);
+            setSelectedImage(movie.hinhAnh);
             form.setFieldsValue(updatedMovie);
         } catch (error) {
             message.error("Đã có lỗi xảy ra");
